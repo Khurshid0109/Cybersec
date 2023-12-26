@@ -1,0 +1,36 @@
+﻿@model NewsModel
+
+@{
+    ViewData["Title"] = "Details";
+    var photo = "~/images/" + (Model.ImageUrl ?? "logo.jpg");
+}
+
+<div class="container detail">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <h2>@Model.Title</h2>
+            <hr />
+            <p>@Model.CreatedAt.ToString("MMM dd, yyyy")<span> / @Model.Category</span></p>
+            <img src="@photo" asp-append-version=true style="width:100%" />
+            <p id="description">
+                @Model.Description
+            </p>
+            <br />
+            <div class="d-flex justify-content-between">
+                <a class="btn"><i class="fa-brands fa-facebook"></i></a>
+                <a class="btn"> <i class="fa-brands fa-instagram"></i></a>
+                <a class="btn"> <i class="fa-brands fa-linkedin"></i></a>
+                <a class="btn"> <i class="fa-brands fa-telegram"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /><br />
+
+<!--For taking break line after each point-->
+<script>
+    var descriptionElement = document.getElementById('description');
+    var descriptionText = descriptionElement.innerHTML;
+    descriptionElement.innerHTML = descriptionText.replace(/\./g, '.<br><br>');
+</script>
