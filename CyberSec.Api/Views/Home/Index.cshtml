@@ -58,7 +58,13 @@
                             <img src="@photo" class="img-fluid custom-img-right" asp-append-version="true" />
                         </div>
                         <div class="col-md-6 mt-1">
-                            <p class="card-title mt-1">@item.Title</p>
+                            @if (item.Title.Length > 80){
+                                <p class="card-title mt-1">@item.Title.Substring(0,80)</p>
+                            }
+                            else
+                            {
+                                <p class="card-title mt-1">@item.Title</p>
+                            }
                             <p> @item.CreatedAt.ToString("MMM d, yyyy")</p>
                         </div>
                     </div>

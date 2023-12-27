@@ -3,6 +3,7 @@ using Cybersec.Service.Mappers;
 using Cybersec.Data.DbContexts;
 using Cybersec.Service.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Cybersec.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ if (!app.Environment.IsDevelopment())
    
     app.UseHsts();
 }
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

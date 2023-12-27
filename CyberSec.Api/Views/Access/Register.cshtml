@@ -1,5 +1,7 @@
-﻿@{
+﻿@model UserPostModel;
+@{
     Layout = null;
+    ViewData["Title"] = "Register page";
 }
 
 <!DOCTYPE html>
@@ -10,26 +12,26 @@
     <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true">
 </head>
 <body>
-
+    
     <div class="wrapper">
         <div class="form-wrapper sign-up">
-            <form action="">
+            <form asp-controller="access" asp-action="Register" method="post" enctype="multipart/form-data">
                 <h2>Register</h2>
                 <div class="input-group">
-                    <input type="text" required>
-                    <label for="">FirstName</label>
+                    <input asp-for="FirstName" type="text" required>
+                    <label asp-for="FirstName" for="">FirstName</label>
                 </div>
                 <div class="input-group">
-                    <input type="text" required>
-                    <label for="">LastName</label>
+                    <input asp-for="LastName" type="text" required>
+                    <label asp-for="LastName" for="">LastName</label>
                 </div>
                  <div class="input-group">
-                    <input type="text" required>
-                    <label for="">Email</label>
+                    <input asp-for="Email" type="text" required>
+                    <label asp-for="Email" for="">Email</label>
                 </div>
                 <div class="input-group">
-                    <input type="password" required>
-                    <label for="">Password</label>
+                    <input asp-for="Password" type="password" required>
+                    <label asp-for="Password" for="">Password</label>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox"> I agree to the terms and conditions</label>
@@ -41,6 +43,7 @@
             </form>
         </div>
     </div>
+    
 </body>
 </html>
 
