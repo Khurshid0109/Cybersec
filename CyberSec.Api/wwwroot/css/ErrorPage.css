@@ -1,0 +1,31 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+}
+
+.error-wrapper {
+    justify-content:center;
+    position: relative;
+    height: 400px;
+    width: 550px;
+    box-shadow: 0 0 50px #0ef;
+    border-radius: 20px;
+    background: #000;
+    padding:30px;
+}
+
+    .error-wrapper h1 {
+        font-size: 30px;
+        text-align: center;
+        color: lawngreen;
+    }

@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- Views/ErrorHandler/GlobalError.cshtml -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="~/css/ErrorPage.css" asp-asp-append-version="true">
+</head>
+<body>
+    <div class="error-wrapper">
+        <h1>Error</h1>
+
+        @if (ViewData["StatusCode"] != null)
+        {
+            <h2>Status Code: @ViewData["StatusCode"]</h2>
+        }
+
+        <p>Ooops...Something went wrong!</p>
+        <a asp-action="Index" asp-controller="Home">Return to Homepage</a>
+    </div>
+</body>
+</html>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+}
