@@ -19,26 +19,26 @@
                 <h2>Register</h2>
                 <div class="input-group">
                     <input asp-for="FirstName" type="text" required>
-                    <label asp-for="FirstName" for="">FirstName</label>
+                    <label asp-for="FirstName" >FirstName</label>
                 </div>
                 <div class="input-group">
                     <input asp-for="LastName" type="text" required>
-                    <label asp-for="LastName" for="">LastName</label>
+                    <label asp-for="LastName" >LastName</label>
                 </div>
                  <div class="input-group">
-                    <input asp-for="Email" type="text" required>
-                    <label asp-for="Email" for="">Email</label>
+                    <input asp-for="Email" value="@ViewBag.Email"  readonly>
+                    <label asp-for="Email" >Email</label>
                 </div>
                 <div class="input-group">
                     <input asp-for="Password" type="password" required>
-                    <label asp-for="Password" for="">Password</label>
+                    <label asp-for="Password" >Password</label>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox"> I agree to the terms and conditions</label>
                 </div>
                 <button type="submit">Register</button>
                 <div class="signUp-link">
-                    <p>Already have an account? <a href="#" class="signInBtn-link">LogIn now</a></p>
+                    <p>Already have an account? <a href="/Access/Login" class="signInBtn-link">LogIn now</a></p>
                 </div>
             </form>
         </div>

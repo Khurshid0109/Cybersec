@@ -1,4 +1,5 @@
-﻿@{
+﻿@model LoginViewModel
+@{
     Layout = null;
 } 
 
@@ -13,22 +14,24 @@
 <body>
     <div class="wrapper">
         <div class="form-wrapper sign-in">
-            <form asp-controller="access" asp-action="post">
+
+            <form asp-controller="access" asp-action="Register" method="post" enctype="multipart/form-data">
+
                 <h2>Login</h2>
                 <div class="input-group">
-                    <input type="text" required>
-                    <label for="">Email</label>
+                    <input asp-for="email" value="@ViewBag.Email" readonly>
+                    <label asp-for="email" >Email</label>
                 </div>
                 <div class="input-group">
-                    <input type="password" required>
-                    <label for="">Password</label>
+                    <input asp-for="password" type="password" required>
+                    <label asp-for="password">Password</label>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox">Rememeber me</label>
                 </div>
                 <button type="submit">Login</button>
                 <div class="signUp-link">
-                    <p>Don't have an account? <a href="#" class="signUpBtn-link">Register now!</a></p>
+                    <p>Don't have an account? <a href="/Access/Register" class="signUpBtn-link">Register now!</a></p>
                 </div>
             </form>
         </div>

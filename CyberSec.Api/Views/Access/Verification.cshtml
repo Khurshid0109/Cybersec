@@ -13,17 +13,18 @@
 <body>
     <div class="wrapper">
         <div class="form-wrapper sign-in">
-
-            <form asp-controller="Access" asp-action="ExistEmail" method="post" enctype="multipart/form-data">
-                <h2>Email</h2>
+            <form asp-controller="access" asp-action="Verification" method="post" enctype="multipart/form-data">
+                <h2>Verification</h2>
                 <div class="input-group">
-                    <input name="email" type="text" required>
+                    <input value="@ViewBag.Email" readonly>
                     <label >Email</label>
-
+                </div>
+                <div class="input-group">
+                    <input  type="number" required>
+                    <label >Verification Code</label>
                 </div>
                
                 <button type="submit">Submit</button>
-                
             </form>
         </div>
     </div>
