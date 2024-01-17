@@ -2,8 +2,8 @@ using Cybersec.Api.Extentions;
 using Cybersec.Service.Mappers;
 using Cybersec.Data.DbContexts;
 using Cybersec.Service.Helpers;
-using Microsoft.EntityFrameworkCore;
 using Cybersec.Api.Middlewares;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +25,7 @@ WebHostEnvironmentHelper.WebRootPath = Path.GetFullPath("wwwroot");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/ErrorHandler/GlobalError");
    
     app.UseHsts();
 }

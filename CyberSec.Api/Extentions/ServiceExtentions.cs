@@ -20,5 +20,8 @@ public static class ServiceExtentions
 
         services.AddScoped<IUserAuthentication, UserAuthentication>();
 
+        services.AddScoped<IUserCodeRepository,UserCodeRepository>();
+        services.AddScoped<IUserCodeService, UserCodeService>();
+
     }
 }
