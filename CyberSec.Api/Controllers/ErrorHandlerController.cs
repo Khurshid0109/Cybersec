@@ -5,12 +5,9 @@ namespace Cybersec.Api.Controllers;
 public class ErrorHandlerController : Controller
 {
     [Route("/ErrorHandler/GlobalError")]
-    public IActionResult GlobalError(int? statusCode = null)
+    public IActionResult GlobalError(int statusCode = 500)
     {
-        if (statusCode.HasValue)
-        {
-            ViewData["StatusCode"] = statusCode.Value;
-        }
+            ViewData["StatusCode"] = statusCode;
 
         return View();
     }
