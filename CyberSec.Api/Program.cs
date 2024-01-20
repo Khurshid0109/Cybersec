@@ -29,6 +29,20 @@ if (!app.Environment.IsDevelopment())
    
     app.UseHsts();
 }
+
+app.Use(async (ctx, next) =>
+{
+    await next();
+
+
+    if(ctx.Response.StatusCode == 404 )
+    {
+        ctx.Request.Path = "/ErrorHandler/GlobalError?statusCode=" + ctx.Response.StatusCode;
+        await next();
+    }
+
+});
+
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
