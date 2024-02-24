@@ -19,4 +19,7 @@ public class NewsPostModel
 
     [Required]
     public IFormFile ImageUrl { get; set; }
+
+    [Required]
+    public string SourceLink { get; set; }
 }

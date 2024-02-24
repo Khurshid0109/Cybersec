@@ -10,7 +10,9 @@ public class User
     public string Password { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public string ImageUrl { get; set; }
     public bool isVerified { get; set; } = false;
     public Role Role { get; set; }
+    public Status Status { get; set; }
     public ICollection<UserCode> USerCodes { get; set; }
 }

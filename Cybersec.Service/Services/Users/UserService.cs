@@ -5,6 +5,7 @@ using Cybersec.Data.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Cybersec.Service.Interfaces.Users;
 using Cybersec.Service.ViewModels.Users;
+using Cybersec.Service.Helpers;
 
 namespace Cybersec.Service.Services.Users;
 public class UserService : IUserService
@@ -29,8 +30,11 @@ public class UserService : IUserService
         if (user is not null)
             throw new CyberException(409, "User already exists");
 
+        var image = await MediaHelper.UploadFile(dto.ImageUrl);
+
         var mapped = _mapper.Map<User>(dto);
         mapped.CreatedAt = DateTime.UtcNow;
+        mapped.ImageUrl = image;
 
         var result = await _userRepository.InsertAsync(mapped);
 
@@ -46,9 +50,11 @@ public class UserService : IUserService
 
         if (user is null)
             throw new CyberException(404, "User is not found!");
+        var image = await MediaHelper.UploadFile(dto.ImageUrl);
 
         var mapped = _mapper.Map(dto, user);
         mapped.UpdatedAt = DateTime.UtcNow;
+        mapped.ImageUrl= image;
 
         await _userRepository.UpdateAsync(mapped);
 

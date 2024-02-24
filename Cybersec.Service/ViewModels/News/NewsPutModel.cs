@@ -18,5 +18,8 @@ public class NewsPutModel
     public Categories Category { get; set; }
 
     [Required]
+    public string SourceLink { get; set; }
+
+    [Required]
     public IFormFile ImageUrl { get; set; }
 }

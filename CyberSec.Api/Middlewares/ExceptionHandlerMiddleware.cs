@@ -26,6 +26,7 @@ public class ExceptionHandlerMiddleware
         }
         catch (Exception e)
         {
+            await Console.Out.WriteLineAsync(e.Message);
             context.Response.Redirect($"/ErrorHandler/GlobalError?statusCode=500");
         }
     }
