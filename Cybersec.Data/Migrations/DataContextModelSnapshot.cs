@@ -44,6 +44,10 @@ namespace Cybersec.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("SourceLink")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -76,6 +80,10 @@ namespace Cybersec.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -85,6 +93,9 @@ namespace Cybersec.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")

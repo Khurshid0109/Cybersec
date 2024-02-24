@@ -16,24 +16,18 @@ public class ExceptionHandlerMiddleware
         try
         {
             await _next(context);
+            if (context.Response.StatusCode == StatusCodes.Status404NotFound)
+                context.Response.Redirect("/ErrorHandler/GlobalError?statusCode=404");
         }
         catch(CyberException ex)
         {
-            context.Response.StatusCode = ex.StatusCode;
-            await context.Response.WriteAsJsonAsync(new Response
-            {
-                Code = ex.StatusCode,
-                Message = ex.Message
-            });
+             context.Response.Redirect($"/ErrorHandler/GlobalError?statusCode={ex.StatusCode}");
+
         }
         catch (Exception e)
         {
-            context.Response.StatusCode = 500;
-            await context.Response.WriteAsJsonAsync(new Response
-            {
-                Code = 500,
-                Message = e.Message
-            });
+            await Console.Out.WriteLineAsync(e.Message);
+            context.Response.Redirect($"/ErrorHandler/GlobalError?statusCode=500");
         }
     }
 }

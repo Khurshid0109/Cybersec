@@ -22,6 +22,8 @@ public class News
     [Required]
     public Categories Category { get; set; }
 
+    public string SourceLink { get; set; }
+
     [Required]
     public string ImageUrl { get; set; }
 }

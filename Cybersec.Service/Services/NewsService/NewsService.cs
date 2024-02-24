@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Cybersec.Data.IRepositories;
 using Cybersec.Domain.Entities;
-using Cybersec.Service.Exceptions;
 using Cybersec.Service.Helpers;
+using Cybersec.Service.Exceptions;
+using Cybersec.Data.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using Cybersec.Service.Interfaces.News;
 using Cybersec.Service.ViewModels.News;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cybersec.Service.Services.NewsService;
 public class NewsService : INewsService
@@ -41,6 +41,7 @@ public class NewsService : INewsService
             throw new CyberException(404, "News is not found");
 
         var mapped= await _newsrepository.UpdateAsync(entry);
+
         mapped.UpdatedAt = DateTime.UtcNow;
         mapped.ImageUrl= await MediaHelper.UploadFile(dto.ImageUrl);
 

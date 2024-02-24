@@ -78,6 +78,7 @@ public class UserAuthentication : IUserAuthentication
         var result = await _userRepository.InsertAsync(mapped);
         await GenerateCode(result);
         var token =  GenerateToken(result);
+        //Refresh token
         return token;
     }
 
