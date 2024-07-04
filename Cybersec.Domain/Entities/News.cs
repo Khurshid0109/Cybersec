@@ -7,7 +7,7 @@ public class News
     [Key]
     public int Id { get; set; }
 
-    [Required, MaxLength(100)]
+    [Required, MinLength(2),MaxLength(100)]
     public string Title { get; set; }
 
     [Required, MinLength(50)]
@@ -22,8 +22,9 @@ public class News
     [Required]
     public Categories Category { get; set; }
 
+    [Required,MinLength(6),MaxLength(50)]
     public string SourceLink { get; set; }
-
-    [Required]
-    public string ImageUrl { get; set; }
+    
+    public List<string> ImageUrls { get; set; }
+    public List<string> VideoUrls { get; set; }
 }

@@ -6,20 +6,16 @@ namespace Cybersec.Service.ViewModels.News;
 public class NewsPostModel
 {
     [Required, MaxLength(100)]
-    public string Title { get; set; } 
+    public string Title { get; set; }
 
     [Required, MinLength(50)]
-    public string Description { get; set; } 
-
-    [DataType(DataType.DateTime)]
-    public DateTime CreatedTime { get; set; } 
+    public string Description { get; set; }
 
     [Required]
     public Categories Category { get; set; }
 
-    [Required]
-    public IFormFile ImageUrl { get; set; }
-
-    [Required]
     public string SourceLink { get; set; }
+
+    public List<IFormFile> Images { get; set; } 
+    public List<IFormFile> Videos { get; set; } 
 }
