@@ -1,4 +1,4 @@
-﻿using Cybersec.Service.ViewModels.Codes;
+﻿using Cybersec.Service.ViewModels.Code;
 
 namespace Cybersec.Service.Interfaces.Users;
 public interface IUserCodeService

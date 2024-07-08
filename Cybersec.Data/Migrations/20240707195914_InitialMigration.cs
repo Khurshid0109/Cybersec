@@ -7,28 +7,25 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cybersec.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Information",
+                name: "Articles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Title = table.Column<string>(type: "text", nullable: false),
                     Category = table.Column<int>(type: "integer", nullable: false),
-                    SourceLink = table.Column<string>(type: "text", nullable: false),
-                    ImageUrl = table.Column<string>(type: "text", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Information", x => x.Id);
+                    table.PrimaryKey("PK_Articles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,6 +51,31 @@ namespace Cybersec.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContentBlocks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    ArticleId = table.Column<int>(type: "integer", nullable: false),
+                    ContentType = table.Column<string>(type: "text", nullable: false),
+                    Code = table.Column<string>(type: "text", nullable: true),
+                    ImageFilePath = table.Column<string>(type: "text", nullable: true),
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    VideoFilePath = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContentBlocks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContentBlocks_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserCodes",
                 columns: table => new
                 {
@@ -76,6 +98,11 @@ namespace Cybersec.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContentBlocks_ArticleId",
+                table: "ContentBlocks",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserCodes_UserId",
                 table: "UserCodes",
                 column: "UserId");
@@ -85,10 +112,13 @@ namespace Cybersec.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Information");
+                name: "ContentBlocks");
 
             migrationBuilder.DropTable(
                 name: "UserCodes");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
 
             migrationBuilder.DropTable(
                 name: "Users");

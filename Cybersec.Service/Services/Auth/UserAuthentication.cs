@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Cybersec.Service.Interfaces.Auth;
 using Cybersec.Service.ViewModels.Users;
-using Cybersec.Service.ViewModels.Codes;
+using Cybersec.Service.ViewModels.Code;
 using Cybersec.Service.Interfaces.Users;
 using Microsoft.Extensions.Configuration;
 

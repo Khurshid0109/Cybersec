@@ -30,4 +30,9 @@
     <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\SiteImages\" />
+    <Folder Include="wwwroot\Videos\" />
+  </ItemGroup>
+
 </Project>

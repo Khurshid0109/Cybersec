@@ -1,5 +1,5 @@
 ﻿namespace Cybersec.Domain.Enums;
-public enum Categories
+public enum Category
 {
     Asosiy,
     Kiber_hujumlar,

@@ -2,8 +2,8 @@
 namespace Cybersec.Domain.Entities;
 public class UserCode
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
+    public long Id { get; set; }
+    public long UserId { get; set; }
     public User User { get; set; }
     public int Code { get; set; }
     public DateTime CreatedAt { get; set; }

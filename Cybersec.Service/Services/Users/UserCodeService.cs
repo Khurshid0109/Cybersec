@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Cybersec.Domain.Entities;
-using Cybersec.Data.IRepositories;
 using Cybersec.Service.Exceptions;
+using Cybersec.Data.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Cybersec.Service.Interfaces.Users;
-using Cybersec.Service.ViewModels.Codes;
+using Cybersec.Service.ViewModels.Code;
 
 namespace Cybersec.Service.Services.Users;
 public class UserCodeService:IUserCodeService

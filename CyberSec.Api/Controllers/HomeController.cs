@@ -1,28 +1,27 @@
 ﻿using Cybersec.Domain.Enums;
-using Microsoft.AspNetCore.Mvc;
-using Cybersec.Service.Interfaces.News;
-using Cybersec.Service.ViewModels.News;
+using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cybersec.Controllers
 {
     public class HomeController : Controller
     {
-    
-        private readonly INewsService _newsService;
-        public HomeController(INewsService newsService)
+        private readonly IArticleService _articleService;
+
+        public HomeController(IArticleService articleService)
         {
-            _newsService = newsService;
+            _articleService = articleService;
         }
 
-        [HttpGet,Route("/"),Route("/home"),Route("/home/index/{category}")]
-        public async Task<IActionResult> Index(Categories? category, [FromQuery] string? q)
-        {            
-            var res= await _newsService.RetrieveAllAsync();
+        [HttpGet, Route("/"), Route("/home"), Route("/home/index/{category}")]
+        public async Task<IActionResult> Index(Category? category, [FromQuery] string? q)
+        {
+            var res = await _articleService.GetAllArticlesAsync();
             HelperViewModel model = new HelperViewModel()
             {
                 rightSide = res,
-                leftSide=res
+                leftSide = res
             };
 
             ViewBag.Category = category;
@@ -32,21 +31,20 @@ namespace Cybersec.Controllers
 
             if (!string.IsNullOrWhiteSpace(q))
             {
-                q=q.Trim();
-                res = res.Where(x => x.Title.Contains(q, StringComparison.OrdinalIgnoreCase) 
-                    || x.Description.Contains(q, StringComparison.OrdinalIgnoreCase));
+                q = q.Trim();
+                res = (ICollection<Service.ViewModels.Article.ArticleViewModel>)res.Where(x => x.Title.Contains(q, StringComparison.OrdinalIgnoreCase));
             }
 
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            var res = await _newsService.RetrieveByIdAsync(id);
+        //[HttpGet]
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var res = await _newsService.RetrieveByIdAsync(id);
 
-            return View(res);
-        }
+        //    return View(res);
+        //}
 
 
         [HttpGet]
@@ -55,17 +53,17 @@ namespace Cybersec.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(NewsPostModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var news = await _newsService.CreateAsync(model);
+        //[HttpPost]
+        //public async Task<IActionResult> Create(NewsPostModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var news = await _newsService.CreateAsync(model);
 
-                return RedirectToAction("details", new { id = news.Id });
-            }
-            return View();
-        }
+        //        return RedirectToAction("details", new { id = news.Id });
+        //    }
+        //    return View();
+        //}
 
     }
 }
