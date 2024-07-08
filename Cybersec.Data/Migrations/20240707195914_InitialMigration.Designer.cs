@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cybersec.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240224200717_initialMigration")]
-    partial class initialMigration
+    [Migration("20240707195914_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Cybersec.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Cybersec.Domain.Entities.News", b =>
+            modelBuilder.Entity("Cybersec.Domain.Entities.Article", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,29 +39,45 @@ namespace Cybersec.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SourceLink")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Information");
+                    b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("Cybersec.Domain.Entities.ContentBlock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("ContentBlocks");
+
+                    b.HasDiscriminator<string>("ContentType").HasValue("ContentBlock");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Cybersec.Domain.Entities.User", b =>
@@ -139,6 +155,61 @@ namespace Cybersec.Data.Migrations
                     b.ToTable("UserCodes");
                 });
 
+            modelBuilder.Entity("Cybersec.Domain.Entities.CodeBlock", b =>
+                {
+                    b.HasBaseType("Cybersec.Domain.Entities.ContentBlock");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Code");
+                });
+
+            modelBuilder.Entity("Cybersec.Domain.Entities.ImageBlock", b =>
+                {
+                    b.HasBaseType("Cybersec.Domain.Entities.ContentBlock");
+
+                    b.Property<string>("ImageFilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Image");
+                });
+
+            modelBuilder.Entity("Cybersec.Domain.Entities.TextBlock", b =>
+                {
+                    b.HasBaseType("Cybersec.Domain.Entities.ContentBlock");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Text");
+                });
+
+            modelBuilder.Entity("Cybersec.Domain.Entities.VideoBlock", b =>
+                {
+                    b.HasBaseType("Cybersec.Domain.Entities.ContentBlock");
+
+                    b.Property<string>("VideoFilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Video");
+                });
+
+            modelBuilder.Entity("Cybersec.Domain.Entities.ContentBlock", b =>
+                {
+                    b.HasOne("Cybersec.Domain.Entities.Article", "Article")
+                        .WithMany("Blocks")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
             modelBuilder.Entity("Cybersec.Domain.Entities.UserCode", b =>
                 {
                     b.HasOne("Cybersec.Domain.Entities.User", "User")
@@ -148,6 +219,11 @@ namespace Cybersec.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Cybersec.Domain.Entities.Article", b =>
+                {
+                    b.Navigation("Blocks");
                 });
 
             modelBuilder.Entity("Cybersec.Domain.Entities.User", b =>

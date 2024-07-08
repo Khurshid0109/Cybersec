@@ -1,9 +1,8 @@
-﻿
-using Cybersec.Service.ViewModels.News;
+﻿using Cybersec.Service.ViewModels.Article;
 
 namespace Cybersec.Service.ViewModels;
 public class HelperViewModel
 {
-    public IEnumerable<NewsModel> leftSide { get; set; }
-    public IEnumerable<NewsModel> rightSide { get; set; }
+    public IEnumerable<ArticleViewModel> leftSide { get; set; }
+    public IEnumerable<ArticleViewModel> rightSide { get; set; }
 }

@@ -1,42 +1,46 @@
 ﻿@model HelperViewModel
 
 @{
-    Categories? category = ViewBag.Category as Categories?;
+    Category? category = ViewBag.Category as Category?;
     ViewData["Title"] = "Bosh sahifa";
 }
 
 <div class="container mt-5 row">
-    <div class="col-md-8">             
+    <div class="col-md-8">
         <h3 class="text-white">@category</h3>
 
-        @foreach (var item in Model.leftSide.Reverse())
+        @foreach (var article in Model.leftSide.Reverse())
         {
-            var photo = "~/images/" + (item.ImageUrl ?? "logo.jpg");
+            var firstImage = article.Blocks
+            .OfType<ImageBlock>()
+            .FirstOrDefault()?.ImageFilePath ?? "logo.jpg";
+            var firstImageUrl = "~/Images/" + firstImage;
+            var description = article.Blocks.OfType<TextBlock>().FirstOrDefault()?.Text ?? article.Title;
 
             <div class="card mt-3 custom-card">
-                <a href="@Url.Action("Details", "Home", new { id = item.Id })">
+                <a href="@Url.Action("Details", "Home", new { id = article.Id })">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="@photo" class="img-fluid custom-img" asp-append-version="true" />
+                            <img src="@firstImageUrl" class="img-fluid custom-img" asp-append-version="true" />
                         </div>
                         <div class="col-md-8 mt-1">
 
-                            <p><i class="fa-solid fa-box-archive"></i> @item.Category | <i class="fa-solid fa-clock"></i> @item.CreatedAt.ToString("MMM d, yyyy")</p>
+                            <p><i class="fa-solid fa-box-archive"></i> @article.Category | <i class="fa-solid fa-clock"></i> @article.CreatedAt.ToString("MMM d, yyyy")</p>
 
-                            <h3 class="card-title mt-1">@item.Title</h3>
+                            <h3 class="card-title mt-1">@article.Title</h3>
                             <p>
-                                @if (item.Description.Length > 100)
-                                { 
-                                    @item.Description.Substring(0, 100)
+                                @if (description.Length > 100)
+                                {
+                                    @description.Substring(0, 100)
                                 }
                                 else
                                 {
-                                    @item.Description
+                                    @description
                                 }
                                 ...
                             </p>
                         </div>
-                    </div>                       
+                    </div>
                 </a>
             </div>
         }
@@ -47,25 +51,31 @@
         @{
             var count = 0;
         }
-        @foreach (var item in Model.rightSide.Reverse())
+        @foreach (var article in Model.rightSide.Reverse())
         {
             count++;
-            var photo = "~/images/" + (item.ImageUrl ?? "logo.jpg");
-            <div class="card mt-3 ">
-                <a href="@Url.Action("Details", "Home", new { id = item.Id })">
+            var firstImage = article.Blocks
+            .OfType<ImageBlock>()
+            .FirstOrDefault()?.ImageFilePath ?? "logo.jpg";
+            var firstImageUrl = "~/Images/" + firstImage;
+            var description = article.Blocks.OfType<TextBlock>().FirstOrDefault()?.Text ?? article.Title;
+
+            <div class="card mt-3">
+                <a href="@Url.Action("Details", "Home", new { id = article.Id })">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="@photo" class="img-fluid custom-img-right" asp-append-version="true" />
+                            <img src="@firstImageUrl" class="img-fluid custom-img-right" asp-append-version="true" />
                         </div>
                         <div class="col-md-6 mt-1">
-                            @if (item.Title.Length > 80){
-                                <p class="card-title mt-1">@item.Title.Substring(0,80)</p>
+                            @if (article.Title.Length > 80)
+                            {
+                                <p class="card-title mt-1">@article.Title.Substring(0, 80)</p>
                             }
                             else
                             {
-                                <p class="card-title mt-1">@item.Title</p>
+                                <p class="card-title mt-1">@article.Title</p>
                             }
-                            <p> @item.CreatedAt.ToString("MMM d, yyyy")</p>
+                            <p>@article.CreatedAt.ToString("MMM d, yyyy")</p>
                         </div>
                     </div>
                 </a>
@@ -73,7 +83,5 @@
             if (count == 7)
                 break;
         }
-
-       
     </div>
 </div>
