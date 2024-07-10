@@ -4,6 +4,7 @@ using Cybersec.Data.DbContexts;
 using Cybersec.Service.Helpers;
 using Cybersec.Api.Middlewares;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,14 @@ builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
-WebHostEnvironmentHelper.WebRootPath = Path.GetFullPath("wwwroot");
+// Serve static files from the SharedMedia folder
+string sharedFolderPath = Path.Combine(AppContext.BaseDirectory, "..", "SharedMedia");
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.GetFullPath(sharedFolderPath)),
+    RequestPath = "/media"
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

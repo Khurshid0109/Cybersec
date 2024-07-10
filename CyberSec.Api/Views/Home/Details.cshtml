@@ -1,36 +1,48 @@
-﻿@* @model NewsModel
+﻿@model ArticleViewModel
 
 @{
-    ViewData["Title"] = "Details";
-    var photo = "~/images/" + (Model.ImageUrl ?? "logo.jpg");
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Title;
 }
 
-<div class="container detail">
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <h2>@Model.Title</h2>
-            <hr />
-            <p>@Model.CreatedAt.ToString("MMM dd, yyyy")<span> / @Model.Category</span></p>
-            <img src="@photo" asp-append-version=true style="width:100%" />
-            <p id="description">
-                @Model.Description
-            </p>
-            <br />
-            <div class="d-flex justify-content-between">
-                <a class="btn"><i class="fa-brands fa-facebook"></i></a>
-                <a class="btn"> <i class="fa-brands fa-instagram"></i></a>
-                <a class="btn"> <i class="fa-brands fa-linkedin"></i></a>
-                <a class="btn"> <i class="fa-brands fa-telegram"></i></a>
-            </div>
+<div class="container mt-5">
+    <div class="article-details text-center">
+        <h1 class="title font-weight-bold">@Model.Title</h1>
+        <h4 class="category font-weight-bold mt-3">@Model.Category</h4>
+        <p class="date text-muted">@Model.CreatedAt.ToString("MMM d, yyyy")</p>
+
+        <div class="content mt-5">
+            @foreach (var block in Model.Blocks.OrderBy(b => b.Order))
+            {
+                if (block is TextBlock textBlock)
+                {
+                    <p class="text-block mt-3" id="description">@textBlock.Text</p>
+                }
+                else if (block is ImageBlock imageBlock)
+                {
+                    var imageUrl = Url.Content("~/media/Images/" + imageBlock.ImageFilePath);
+                    <img src="@imageUrl" class="img-fluid mt-3" />
+                }
+                else if (block is VideoBlock videoBlock)
+                {
+                    var videoUrl = Url.Content("~/media/Videos/" + videoBlock.VideoFilePath);
+                    <video src="@videoUrl" controls class="img-fluid mt-3"></video>
+                }
+                else if (block is CodeBlock codeBlock)
+                {
+                    <pre class="code-block mt-3"><code>@codeBlock.Code</code></pre>
+                }
+            }
         </div>
     </div>
 </div>
 
-<br /><br />
-
-<!--For taking break line after each point-->
 <script>
-    var descriptionElement = document.getElementById('description');
-    var descriptionText = descriptionElement.innerHTML;
-    descriptionElement.innerHTML = descriptionText.replace(/\./g, '.<br><br>');
-</script> *@
+    document.addEventListener("DOMContentLoaded", function () {
+        var descriptionElements = document.querySelectorAll('.text-block');
+        descriptionElements.forEach(function (element) {
+            var descriptionText = element.innerHTML;
+            element.innerHTML = descriptionText.replace(/\./g, '.<br><br>');
+        });
+    });
+</script>

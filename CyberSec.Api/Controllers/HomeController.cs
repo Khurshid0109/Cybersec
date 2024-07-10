@@ -38,13 +38,13 @@ namespace Cybersec.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Details(int id)
-        //{
-        //    var res = await _newsService.RetrieveByIdAsync(id);
+        [HttpGet]
+        public async Task<IActionResult> Details(long id)
+        {
+            var res = await _articleService.GetArticleByIdAsync(id);
 
-        //    return View(res);
-        //}
+            return View(res);
+        }
 
 
         [HttpGet]

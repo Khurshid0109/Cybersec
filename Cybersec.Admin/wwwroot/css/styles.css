@@ -157,6 +157,7 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 50px;
+    margin-top: 70px;
 }
 
 .nav {

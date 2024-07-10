@@ -1,0 +1,28 @@
+﻿@model ArticleViewModel
+
+<h1>@Model.Title</h1>
+<p>Category: @Model.Category</p>
+
+@foreach (var block in Model.Blocks.OrderBy(b => b.Order))
+{
+    switch (block)
+    {
+        case TextBlockViewModel textBlock:
+            <p>@textBlock.Text</p>
+            break;
+        case ImageBlockViewModel imageBlock:
+            <img src="~/@imageBlock.ImageFilePath" class="img-fluid" />
+            break;
+        case VideoBlockViewModel videoBlock:
+            <video controls class="img-fluid">
+                <source src="~/@videoBlock.VideoFilePath" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            break;
+        case CodeBlockViewModel codeBlock:
+            <pre><code>@codeBlock.Code</code></pre>
+            break;
+        default:
+            throw new InvalidOperationException("Unknown content block type");
+    }
+}

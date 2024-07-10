@@ -1,0 +1,79 @@
+﻿@model ArticlePostModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Article";
+}
+
+<h1>Create Article</h1>
+
+<form asp-controller="Article" asp-action="Create" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div id="blocks-container" class="form-group"></div>
+    <input type="hidden" id="orders" name="Orders" />
+    <button type="button" class="btn btn-primary" id="add-text">Add Text</button>
+    <button type="button" class="btn btn-success" id="add-image">Add Image</button>
+    <button type="button" class="btn btn-info" id="add-video">Add Video</button>
+    <button type="button" class="btn btn-warning" id="add-code">Add Code</button>
+    <button type="submit" class="btn btn-primary">Publish</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var blockCounter = 0;
+
+            function updateOrders() {
+                var orders = [];
+                $('#blocks-container').children().each(function () {
+                    var orderType = $(this).find('input[name="blockType"]').val();
+                    orders.push(orderType);
+                });
+                $('#orders').val(orders.join(','));
+            }
+
+            $('#add-text').click(function () {
+                var textBlock = `<div class="text-block">
+                                            <input type="hidden" name="blockType" value="text" />
+                                            <textarea name="Texts" class="form-control" placeholder="Enter text"></textarea>
+                                         </div>`;
+                $('#blocks-container').append(textBlock);
+                blockCounter++;
+                updateOrders();
+            });
+
+            $('#add-image').click(function () {
+                var imageBlock = `<div class="image-block">
+                                            <input type="hidden" name="blockType" value="image" />
+                                            <input type="file" name="Images" class="form-control-file" />
+                                          </div>`;
+                $('#blocks-container').append(imageBlock);
+                blockCounter++;
+                updateOrders();
+            });
+
+            $('#add-video').click(function () {
+                var videoBlock = `<div class="video-block">
+                                            <input type="hidden" name="blockType" value="video" />
+                                            <input type="file" name="Videos" class="form-control-file" />
+                                          </div>`;
+                $('#blocks-container').append(videoBlock);
+                blockCounter++;
+                updateOrders();
+            });
+
+            $('#add-code').click(function () {
+                var codeBlock = `<div class="code-block">
+                                            <input type="hidden" name="blockType" value="code" />
+                                            <textarea name="Codes" class="form-control" placeholder="Enter code"></textarea>
+                                         </div>`;
+                $('#blocks-container').append(codeBlock);
+                blockCounter++;
+                updateOrders();
+            });
+        });
+    </script>
+}
