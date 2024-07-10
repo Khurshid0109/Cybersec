@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Videos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
   </ItemGroup>
 
 </Project>

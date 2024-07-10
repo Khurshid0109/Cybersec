@@ -27,8 +27,17 @@ public class ArticleService : IArticleService
     {
         var article = _mapper.Map<Article>(model);
         article.Blocks = new List<ContentBlock>();
+        // Logging the input model for debugging
+        Console.WriteLine("Orders: " + model.Orders);
+        Console.WriteLine("Texts: " + string.Join(", ", model.Texts));
+        Console.WriteLine("Images: " + model.Images.Count);
+        Console.WriteLine("Videos: " + model.Videos.Count);
+        Console.WriteLine("Codes: " + model.Codes.Count);
 
         var orderList = model.Orders.Split(',').ToList();
+
+        Console.WriteLine("Order List: " + string.Join(", ", orderList));
+
         int imageIndex = 0, videoIndex = 0, textIndex = 0, codeIndex = 0;
 
         for (int i = 0; i < orderList.Count; i++)
@@ -98,6 +107,8 @@ public class ArticleService : IArticleService
     public async Task<ICollection<ArticleViewModel>> GetAllArticlesAsync()
     {
         var articles = await _articleRepo.SelectAll()
+            .Include(a=>a.Blocks)
+            .AsNoTracking()
             .ToListAsync();
 
         return _mapper.Map<ICollection<ArticleViewModel>>(articles);
@@ -107,6 +118,7 @@ public class ArticleService : IArticleService
     {
         var article = await _articleRepo.SelectAll()
              .Where(a => a.Id == id)
+             .Include(a => a.Blocks)
              .AsNoTracking()
              .FirstOrDefaultAsync();
 

@@ -1,24 +1,34 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Cybersec.Service.Helpers;
-public class MediaHelper
+namespace Cybersec.Service.Helpers
 {
-    public static async Task<string> UploadFile(IFormFile file, string mediaType)
+    public static class MediaHelper
     {
-        string uniqueFileName = "";
-        if (file != null && file.Length > 0)
+        public static async Task<string> UploadFile(IFormFile file, string mediaType)
         {
-            string uploadsFolder = Path.Combine(WebHostEnvironmentHelper.WebRootPath, mediaType == "image"? "Images" : "Videos");
-            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-            string imageFilePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            using (var fileStream = new FileStream(imageFilePath, FileMode.Create))
+            string uniqueFileName = "";
+            if (file != null && file.Length > 0)
             {
-                await file.CopyToAsync(fileStream);
-            }
-        }
+                // Path to the SharedMedia folder in the root solution directory
+                string sharedFolderPath = Path.Combine(AppContext.BaseDirectory, "..", "SharedMedia");
+                string uploadsFolder = Path.Combine(sharedFolderPath, mediaType == "image" ? "Images" : "Videos");
 
-        return uniqueFileName;
+                // Create directory if it does not exist
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
     }
 }

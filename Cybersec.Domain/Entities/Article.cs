@@ -8,5 +8,5 @@ public class Article
     public Category Category { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public List<ContentBlock> Blocks { get; set; } = new List<ContentBlock>();
+    public List<ContentBlock>? Blocks { get; set; } 
 }
