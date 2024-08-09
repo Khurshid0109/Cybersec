@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
-    <Folder Include="wwwroot\Videos\" />
+    <Compile Remove="wwwroot\Videos\**" />
+    <Content Remove="wwwroot\Videos\**" />
+    <EmbeddedResource Remove="wwwroot\Videos\**" />
+    <None Remove="wwwroot\Videos\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

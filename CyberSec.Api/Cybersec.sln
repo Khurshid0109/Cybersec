@@ -13,12 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cybersec.Service", "..\Cybe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cybersec.Admin", "..\Cybersec.Admin\Cybersec.Admin.csproj", "{4B715E12-EEEA-4465-9E92-08E0FBC16A9E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedMedia", "SharedMedia", "{AF1FF8BA-CC00-4277-BDC5-815EEB31D875}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{DCF54D20-31B7-47C7-A2D3-B673C8CB448E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Videos", "Videos", "{84D5457A-AEB0-4A8D-8B05-BB1E410AD9FC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,10 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{DCF54D20-31B7-47C7-A2D3-B673C8CB448E} = {AF1FF8BA-CC00-4277-BDC5-815EEB31D875}
-		{84D5457A-AEB0-4A8D-8B05-BB1E410AD9FC} = {AF1FF8BA-CC00-4277-BDC5-815EEB31D875}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {334D82B8-6884-4579-A868-EDC7783206AE}

@@ -1,11 +1,11 @@
 using Cybersec.Data.DbContexts;
-using Cybersec.Service.Mappers;
-using Cybersec.Data.Repositories;
 using Cybersec.Data.IRepositories;
-using Microsoft.EntityFrameworkCore;
-using Cybersec.Service.Services.Articles;
-using Microsoft.Extensions.FileProviders;
+using Cybersec.Data.Repositories;
+using Cybersec.Service.Helpers;
 using Cybersec.Service.Interfaces.Articles;
+using Cybersec.Service.Mappers;
+using Cybersec.Service.Services.Articles;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ builder.Services.AddScoped<IArticleRepository,ArticleRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
+MediaHelper.Configuration = builder.Configuration;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -32,17 +33,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-// Configure to serve SharedMedia directory
-string sharedMediaPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\..\SharedMedia");
-if (Directory.Exists(sharedMediaPath))
-{
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        FileProvider = new PhysicalFileProvider(sharedMediaPath),
-        RequestPath = "/media"
-    });
-}
 
 app.UseRouting();
 
