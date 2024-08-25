@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
+    <ProjectReference Include="..\Cybersec.SharedResources\Cybersec.SharedResources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

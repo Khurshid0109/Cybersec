@@ -20,7 +20,10 @@ builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
+var baseDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+string path= Path.Combine(baseDirectory, "SharedResources", "SharedMedia");
 
+Console.WriteLine(path);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

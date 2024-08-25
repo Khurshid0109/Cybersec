@@ -1,7 +1,6 @@
 using Cybersec.Data.DbContexts;
 using Cybersec.Data.IRepositories;
 using Cybersec.Data.Repositories;
-using Cybersec.Service.Helpers;
 using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.Mappers;
 using Cybersec.Service.Services.Articles;
@@ -22,7 +21,6 @@ builder.Services.AddScoped<IArticleRepository,ArticleRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
-MediaHelper.Configuration = builder.Configuration;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -41,5 +39,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "media",
+    pattern: "media/{action}/{fileName?}",
+    defaults: new { controller = "Media", action = "GetImage" });
 
 app.Run();

@@ -1,5 +1,7 @@
 ﻿@model ArticleViewModel
-
+@{
+    var path = "D:/Projects/Cybersec/Cybersec.SharedResources/Shared";
+}
 <h1>@Model.Title</h1>
 <p>Category: @Model.Category</p>
 
@@ -11,11 +13,11 @@
             <p>@textBlock.Text</p>
             break;
         case ImageBlockViewModel imageBlock:
-            <img src="~/@imageBlock.ImageFilePath" class="img-fluid" />
+            <img src="@Url.Action("GetImage", "Media", new { fileName = imageBlock.ImageFilePath })" class="img-fluid" />
             break;
         case VideoBlockViewModel videoBlock:
             <video controls class="img-fluid">
-                <source src="~/@videoBlock.VideoFilePath" type="video/mp4" />
+                <source src="@Url.Action("GetVideo", "Media", new { fileName = videoBlock.VideoFilePath })" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
             break;

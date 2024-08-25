@@ -32,6 +32,7 @@
     <ProjectReference Include="..\Cybersec.Data\Cybersec.Data.csproj" />
     <ProjectReference Include="..\Cybersec.Domain\Cybersec.Domain.csproj" />
     <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
+    <ProjectReference Include="..\Cybersec.SharedResources\Cybersec.SharedResources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

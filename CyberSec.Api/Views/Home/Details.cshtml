@@ -14,21 +14,19 @@
         <div class="content mt-5">
             @foreach (var block in Model.Blocks.OrderBy(b => b.Order))
             {
-                if (block is TextBlock textBlock)
+                if (block is TextBlockViewModel textBlock)
                 {
                     <p class="text-block mt-3" id="description">@textBlock.Text</p>
                 }
-                else if (block is ImageBlock imageBlock)
+                else if (block is ImageBlockViewModel imageBlock)
                 {
-                    var imageUrl = Url.Content("~/media/Images/" + imageBlock.ImageFilePath);
-                    <img src="@imageUrl" class="img-fluid mt-3" />
+                    <img src="@Url.Action("GetImage", "Media", new { fileName = imageBlock.ImageFilePath })" class="img-fluid mt-3" />
                 }
-                else if (block is VideoBlock videoBlock)
+                else if (block is VideoBlockViewModel videoBlock)
                 {
-                    var videoUrl = Url.Content("~/media/Videos/" + videoBlock.VideoFilePath);
-                    <video src="@videoUrl" controls class="img-fluid mt-3"></video>
+                    <video src="@Url.Action("GetVideo", "Media", new { fileName = videoBlock.VideoFilePath })" controls class="img-fluid mt-3"></video>
                 }
-                else if (block is CodeBlock codeBlock)
+                else if (block is CodeBlockViewModel codeBlock)
                 {
                     <pre class="code-block mt-3"><code>@codeBlock.Code</code></pre>
                 }

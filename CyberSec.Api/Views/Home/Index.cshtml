@@ -12,17 +12,16 @@
         @foreach (var article in Model.leftSide.Reverse())
         {
             var firstImage = article.Blocks
-            .OfType<ImageBlock>()
+            .OfType<ImageBlockViewModel>()
             .FirstOrDefault()?.ImageFilePath ?? "logo.jpg";
 
-            var firstImageUrl = "~/Images/" + firstImage;
             var description = article.Blocks.OfType<TextBlock>().FirstOrDefault()?.Text ?? article.Title;
 
             <div class="card mt-3 custom-card">
                 <a href="@Url.Action("Details", "Home", new { id = article.Id })">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="@firstImageUrl" class="img-fluid custom-img" asp-append-version="true" />
+                            <img src="@Url.Action("GetImage", "Media", new { fileName = firstImage })" class="img-fluid custom-img" asp-append-version="true" />
                         </div>
                         <div class="col-md-8 mt-1">
 
@@ -56,16 +55,16 @@
         {
             count++;
             var firstImage = article.Blocks
-            .OfType<ImageBlock>()
+            .OfType<ImageBlockViewModel>()
             .FirstOrDefault()?.ImageFilePath ?? "logo.jpg";
-            var firstImageUrl = "~/Images/" + firstImage;
+            
             var description = article.Blocks.OfType<TextBlock>().FirstOrDefault()?.Text ?? article.Title;
 
             <div class="card mt-3">
                 <a href="@Url.Action("Details", "Home", new { id = article.Id })">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="@firstImageUrl" class="img-fluid custom-img-right" asp-append-version="true" />
+                            <img src="@Url.Action("GetImage", "Media", new { fileName = firstImage })" class="img-fluid custom-img-right" asp-append-version="true" />
                         </div>
                         <div class="col-md-6 mt-1">
                             @if (article.Title.Length > 80)

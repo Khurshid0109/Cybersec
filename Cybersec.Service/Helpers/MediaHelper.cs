@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 
 namespace Cybersec.Service.Helpers
 {
     public static class MediaHelper
     {
-        public static IConfiguration Configuration { get; set; }
-
         public static async Task<string> UploadFile(IFormFile file, string mediaType)
         {
-            string mediaRootPath = Configuration["MediaSettings:MediaRootPath"];
+            string mediaRootPath = GetMediaRootPath();
             string uploadsFolder = Path.Combine(mediaRootPath, mediaType == "image" ? "Images" : "Videos");
 
             if (!Directory.Exists(uploadsFolder))
@@ -26,6 +23,13 @@ namespace Cybersec.Service.Helpers
             }
 
             return uniqueFileName;
+        }
+
+        private static string GetMediaRootPath()
+        {
+            // Assuming the SharedResources project is at the same level as other projects
+            var baseDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            return Path.Combine(baseDirectory, "Cybersec.SharedResources", "Shared");
         }
     }
 }
