@@ -1,12 +1,10 @@
 ﻿using Cybersec.Domain.Enums;
+using Cybersec.Domain.Commons;
 
 namespace Cybersec.Domain.Entities;
-public class Article
+public class Article:Auditable
 {
-    public long Id { get; set; }
     public string Title { get; set; }
     public Category Category { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
     public List<ContentBlock>? Blocks { get; set; } 
 }

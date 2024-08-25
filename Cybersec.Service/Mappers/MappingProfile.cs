@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Cybersec.Domain.Entities;
-using Cybersec.Service.ViewModels.Users;
-using Cybersec.Service.ViewModels.Code;
+using Cybersec.Service.DTOs.Code;
+using Cybersec.Service.DTOs.Users;
 using Cybersec.Service.ViewModels.Article;
 
 namespace Cybersec.Service.Mappers;
@@ -12,7 +12,7 @@ public class MappingProfile:Profile
 		// User
 		CreateMap<User, UserPostModel>().ReverseMap();
 		CreateMap<User, UserPutModel>().ReverseMap();
-		CreateMap<User, UserModel>().ReverseMap();
+		CreateMap<User, UserViewModel>().ReverseMap();
 
 		// UserCode
 		CreateMap<UserCode,UserCodePostModel>().ReverseMap();

@@ -55,10 +55,10 @@ namespace Cybersec.Controllers
 
                 var result = await _authService.CheckEmail(email);
 
-                if (result is EmailExistance.NotFound)
+                if (result is EmailExistanceEnum.NotFound)
                     return Redirect("~/Access/Register");
 
-                else if (result is EmailExistance.NotVerified)
+                else if (result is EmailExistanceEnum.NotVerified)
                     return Redirect("~/Access/Verification");
 
                 return Redirect("~/Access/Login");

@@ -1,12 +1,17 @@
-﻿using Cybersec.Service.ViewModels.Users;
+﻿using Cybersec.Service.DTOs.Users;
+using Cybersec.Service.ViewModels.Users;
 
 namespace Cybersec.Service.Interfaces.Users;
 public interface IUserService
 {
-    Task<bool> RemoveAsync(int id);
-    Task<UserModel> RetrieveByIdAsync(int id);
-    Task<UserModel> RetrieveByEmailAsync(string email);
-    Task<IEnumerable<UserModel>> RetrieveAllAsync();
-    Task<UserModel> CreateAsync(UserPostModel dto);
-    Task<UserModel> ModifyAsync(int id, UserPutModel dto);
+    Task<bool> DeleteAsync(long id);
+    Task<bool> RollbackAsync(long id);
+    Task<UserViewModel> GetByIdAsync(long id);
+    Task<PaginationViewModel<UserViewModel>> GetAllAsync(PaginationParams @params, bool deleted);
+    Task<UserViewModel> GetByEmailAsync(string email);
+    Task<UserViewModel> CreateAsync(UserPostModel model);
+    Task<UserViewModel> UpdateAsync(long id, UserPutModel model);
+    Task<bool> CheckPreviousPassword(long id, string password);
+    Task<bool> ChangePasswordAsync(long id, string oldPassword, string newPassword);
+    Task<bool> ChangeEmailAsync(long userID, string email, long code);
 }

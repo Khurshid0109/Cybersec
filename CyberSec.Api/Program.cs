@@ -17,13 +17,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddCustomServices();
 
-
 var app = builder.Build();
 
-var baseDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-string path= Path.Combine(baseDirectory, "SharedResources", "SharedMedia");
-
-Console.WriteLine(path);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -35,7 +30,6 @@ if (!app.Environment.IsDevelopment())
 app.Use(async (ctx, next) =>
 {
     await next();
-
 
     if(ctx.Response.StatusCode == 404 )
     {
