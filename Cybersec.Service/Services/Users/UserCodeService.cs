@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Cybersec.Data.IRepositories;
 using Cybersec.Domain.Entities;
+using Cybersec.Domain.Enums;
 using Cybersec.Service.DTOs.Code;
 using Cybersec.Service.Exceptions;
+using Cybersec.Service.Extentions;
 using Cybersec.Service.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,13 +24,12 @@ public class UserCodeService(
             .FirstOrDefaultAsync();
 
         if (user is null)
-            throw new TestHouseException(404, "User is not found!");
+            throw new CyberException(404, "User is not found!");
 
         model.ExpireDate = DateTime.UtcNow.AddMinutes(3);
         model.CreatedAt = DateTime.UtcNow;
 
         var result = await userCodeRepository.InsertAsync(model);
-        await userCodeRepository.SaveAsync();
 
         return mapper.Map<UserCodeViewModel>(result);
     }
@@ -39,10 +41,9 @@ public class UserCodeService(
              .FirstOrDefaultAsync();
 
         if (code is null)
-            throw new TestHouseException(404, "Code is not found!");
+            throw new CyberException(404, "Code is not found!");
 
-        await userCodeRepository.DeleteAsync(uc => uc.Id == id);
-        await userCodeRepository.SaveAsync();
+        await userCodeRepository.DeleteAsync(id);
 
         return true;
     }
@@ -51,7 +52,7 @@ public class UserCodeService(
     {
         var codes = await userCodeRepository.SelectAll()
              .IgnoreQueryFilters()
-             .Where(uc => uc.IsDeleted == deleted)
+             .Where(uc => deleted ? uc.Status == Status.Deleted:uc.Status == Status.Active)
              .AsNoTracking()
              .ProjectTo<UserCodeViewModel>(mapper.ConfigurationProvider)
              .ToPaginationAsync(@params);
@@ -67,7 +68,7 @@ public class UserCodeService(
              .FirstOrDefaultAsync();
 
         if (code is null)
-            throw new TestHouseException(404, "Code is not found!");
+            throw new CyberException(404, "Code is not found!");
 
         return mapper.Map<UserCodeViewModel>(code);
     }

@@ -8,4 +8,5 @@ public class UserCode:Auditable
     public User User { get; set; }
     public int Code { get; set; }
     public bool IsUsed { get; set; } = false;
+    public DateTime ExpireDate { get; set; }
 }

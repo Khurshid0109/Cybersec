@@ -2,12 +2,14 @@
 using Cybersec.Service.Interfaces.Auth;
 using Cybersec.Service.Interfaces.Users;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualBasic;
 using System.Net.Mail;
 using System.Net;
 using Cybersec.Data.IRepositories;
 using Cybersec.Domain.Enums;
 using Cybersec.Service.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using Cybersec.Service.Helpers;
+using Cybersec.Service.DTOs.Auth;
 
 namespace Cybersec.Service.Services.Auth;
 public class EmailExist(
@@ -19,21 +21,21 @@ public class EmailExist(
 {
     private readonly IConfiguration _configuration = configuration.GetSection("Email");
 
-    public async Task<EmailExistanceEnum> EmailExistance(string email)
+    public async Task<EmailExistanceEnum> EmailExistance(EmailModel email)
     {
-        email = email.ToLower();
+        string userEmail = email.Email;
         var user = await repository
             .SelectAll()
             .IgnoreQueryFilters()
-            .FirstOrDefaultAsync(u => u.Email == email);
+            .FirstOrDefaultAsync(u => u.Email.ToLower().Equals(userEmail.ToLower()));
 
         if (user is null)
             return EmailExistanceEnum.NotFound;
 
-        if (user.IsVerified)
+        if (user.isVerified)
             return EmailExistanceEnum.Found;
 
-        var resend = await ResendCodeAsync(email);
+        var resend = await ResendCodeAsync(userEmail);
 
         if (!resend)
             throw new CyberException(403, "Birozdan keyinroq qayta urinib ko'ring!");
@@ -60,11 +62,10 @@ public class EmailExist(
             if (user is null)
                 return false;
 
-            if (!user.IsVerified)
+            if (!user.isVerified)
             {
-                user.IsVerified = true;
-                repository.Update(user);
-                await repository.SaveAsync();
+                user.isVerified = true;
+                await repository.UpdateAsync(user);
             }
             return true;
         }
@@ -75,7 +76,7 @@ public class EmailExist(
     public async Task<bool> ResendCodeAsync(string email)
     {
         email = email.ToLower();
-        var userCodeAny = await codeRepository.SelectAll(includes: ["User"])
+        var userCodeAny = await codeRepository.SelectAll()
             .AnyAsync(c => c.User.Email.ToLower() == email && c.ExpireDate > DateTime.UtcNow);
 
         if (userCodeAny)
@@ -95,9 +96,9 @@ public class EmailExist(
 
         var message = new Message()
         {
-            Subject = "TestHouse Bu kodni boshqalarga bermang!",
+            Subject = "Cybersec Bu kodni boshqalarga bermang!",
             To = email,
-            Body = $"TestHouse platformasi uchun sizning tasdiqlash kodingiz: {randomNumber}"
+            Body = $"Cybersec platformasi uchun sizning tasdiqlash kodingiz: {randomNumber}"
         };
 
 

@@ -1,11 +1,6 @@
 ﻿using Cybersec.Domain.Entities;
 
 namespace Cybersec.Data.IRepositories;
-public interface IUserRepository
+public interface IUserRepository:IRepository<User>
 {
-    IQueryable<User> SelectAll();
-    Task<User> InsertAsync(User user);
-    Task<bool> DeleteAsync(int id);
-    Task<User> UpdateAsync(User user);
-    Task<User> SelectByIdAsync(int id);
 }

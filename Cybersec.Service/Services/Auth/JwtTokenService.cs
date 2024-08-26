@@ -1,12 +1,12 @@
-﻿using Cybersec.Service.DTOs.Users;
-using Cybersec.Service.Interfaces.Auth;
-using Microsoft.Extensions.Configuration;
+﻿using System.Text;
+using System.Security.Claims;
+using Cybersec.Service.DTOs.Users;
+using System.Security.Cryptography;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
+using Cybersec.Service.Interfaces.Auth;
+using Microsoft.Extensions.Configuration;
 
 namespace Cybersec.Service.Services.Auth;
 public class JwtTokenService(

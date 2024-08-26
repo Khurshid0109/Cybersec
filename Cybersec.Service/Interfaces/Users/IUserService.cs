@@ -1,5 +1,5 @@
 ﻿using Cybersec.Service.DTOs.Users;
-using Cybersec.Service.ViewModels.Users;
+using Cybersec.Service.Extentions;
 
 namespace Cybersec.Service.Interfaces.Users;
 public interface IUserService

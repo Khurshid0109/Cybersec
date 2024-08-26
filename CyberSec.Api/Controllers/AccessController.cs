@@ -1,20 +1,25 @@
 ﻿using Cybersec.Domain.Enums;
-using Microsoft.AspNetCore.Mvc;
+using Cybersec.Service.DTOs.Auth;
+using Cybersec.Service.DTOs.Users;
 using Cybersec.Service.Interfaces.Auth;
-using Cybersec.Service.ViewModels.Users;
 using Cybersec.Service.Interfaces.Users;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cybersec.Controllers
 {
     public class AccessController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IUserAuthentication _authService;
+        private readonly IAuthService _authService;
+        private readonly IExistEmail _existEmail;
 
-        public AccessController(IUserService userService, IUserAuthentication authService)
+        public AccessController(IUserService userService, 
+                                IAuthService authService,
+                                IExistEmail  existEmail)
         {
             _userService = userService;
             _authService = authService;
+            _existEmail  = existEmail;
         }
 
         [HttpGet]
@@ -30,7 +35,7 @@ namespace Cybersec.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginPostModel model)
         {
             if (ModelState.IsValid)
             {
@@ -47,13 +52,13 @@ namespace Cybersec.Controllers
         }
 
         [HttpPost("ExistEmail")]
-        public async Task<IActionResult> ExistEmail(string email)
+        public async Task<IActionResult> ExistEmail(EmailModel mail)
         {
-            if (!string.IsNullOrWhiteSpace(email))
+            if (ModelState.IsValid)  
             {
-                TempData["Email"] = email;
+                TempData["Email"] = mail;
 
-                var result = await _authService.CheckEmail(email);
+                var result = await _existEmail.EmailExistance(mail);
 
                 if (result is EmailExistanceEnum.NotFound)
                     return Redirect("~/Access/Register");

@@ -1,4 +1,5 @@
-﻿@model LoginViewModel
+﻿@using Cybersec.Service.DTOs.Auth
+@model LoginPostModel
 @{
     Layout = null;
 } 
@@ -19,12 +20,12 @@
 
                 <h2>Login</h2>
                 <div class="input-group">
-                    <input asp-for="email" value="@ViewBag.Email" readonly>
-                    <label asp-for="email" >Email</label>
+                    <input asp-for="Email" value="@ViewBag.Email" readonly>
+                    <label asp-for="Email">Email</label>
                 </div>
                 <div class="input-group">
-                    <input asp-for="password" type="password" required>
-                    <label asp-for="password">Password</label>
+                    <input asp-for="Password" type="password" required>
+                    <label asp-for="Password">Password</label>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox">Rememeber me</label>

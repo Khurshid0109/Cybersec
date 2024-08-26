@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Cybersec.Data.IRepositories;
 using Cybersec.Domain.Entities;
 using Cybersec.Domain.Enums;
 using Cybersec.Service.DTOs.Users;
 using Cybersec.Service.Exceptions;
+using Cybersec.Service.Extentions;
+using Cybersec.Service.Helpers;
 using Cybersec.Service.Interfaces.Auth;
 using Cybersec.Service.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +26,7 @@ public class UserService(
             .Where(u => u.Email == model.Email)
             .FirstOrDefaultAsync();
 
-        if (user is not null && !user.IsVerified)
+        if (user is not null && !user.isVerified)
             throw new CyberException(409, "Siz avval ro'yhatdan o'tgansiz, iltimos pochtangizni tasdiqlang va tizimga kiring!");
 
         if (user is not null)
@@ -32,10 +35,8 @@ public class UserService(
         var mapped = mapper.Map<User>(model);
         mapped.CreatedAt = DateTime.UtcNow;
         mapped.Password = HashPasswordHelper.PasswordHasher(model.Password);
-        mapped.Role = Role.User;
 
         var result = await userRepository.InsertAsync(mapped);
-        await userRepository.SaveAsync();
 
         await existEmail.ResendCodeAsync(model.Email);
 
@@ -52,8 +53,7 @@ public class UserService(
         if (user is null)
             throw new CyberException(404, "User is not found.");
 
-        await userRepository.DeleteAsync(u => u.Id == id);
-        await userRepository.SaveAsync();
+        await userRepository.DeleteAsync(id);
 
         return true;
     }
@@ -68,8 +68,7 @@ public class UserService(
         if (user is null)
             throw new CyberException(404, "User is not found.");
 
-        await userRepository.RollbackAsync(u => u.Id == id);
-        await userRepository.SaveAsync();
+        await userRepository.RollbackAsync(id);
 
         return true;
     }
@@ -78,7 +77,7 @@ public class UserService(
     {
         var users = await userRepository.SelectAll()
                .IgnoreQueryFilters()
-               .Where(u => u.IsDeleted == deleted)
+               .Where(u => deleted? u.Status == Status.Deleted : u.Status == Status.Active)
                .AsNoTracking()
                .ProjectTo<UserViewModel>(mapper.ConfigurationProvider)
                .ToPaginationAsync(@params);
@@ -89,7 +88,8 @@ public class UserService(
     public async Task<UserViewModel> GetByEmailAsync(string email)
     {
         var user = await userRepository.SelectAll()
-             .AnyAsync(u => u.Email == email);
+             .AsNoTracking()
+             .AnyAsync(u => u.Email.ToLower() == email.ToLower());
 
         if (!user)
             throw new CyberException(404, "Bunday foydalanuvchi topilmadi!");
@@ -106,7 +106,7 @@ public class UserService(
               .FirstOrDefaultAsync();
 
         if (user is null)
-            throw new CyberException(404);
+            throw new CyberException(404,"User is not found.");
 
         return mapper.Map<UserViewModel>(user);
     }
@@ -118,12 +118,11 @@ public class UserService(
              .FirstOrDefaultAsync(u => u.Id == id);
 
         if (user is null)
-            throw new CyberException(404);
+            throw new CyberException(404,"User is not found.");
 
         var mapped = mapper.Map(model, user);
 
-        mapped = userRepository.Update(mapped);
-        await userRepository.SaveAsync();
+        mapped =await userRepository.UpdateAsync(mapped);
 
         return mapper.Map<UserViewModel>(mapped);
     }
@@ -157,8 +156,7 @@ public class UserService(
 
         user.Password = HashPasswordHelper.PasswordHasher(newPassword);
 
-        userRepository.Update(user);
-        await userRepository.SaveAsync();
+        await userRepository.UpdateAsync(user);
 
         return true;
     }
@@ -193,8 +191,7 @@ public class UserService(
 
             user.Email = email;
 
-            userRepository.Update(user);
-            await userRepository.SaveAsync();
+            await userRepository.UpdateAsync(user);
 
             return true;
         }

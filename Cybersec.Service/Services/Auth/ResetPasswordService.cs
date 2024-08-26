@@ -1,11 +1,12 @@
-﻿using Cybersec.Data.IRepositories;
+﻿using System.Web;
 using Cybersec.Domain.Entities;
 using Cybersec.Service.DTOs.Auth;
+using Cybersec.Data.IRepositories;
 using Cybersec.Service.Exceptions;
-using Cybersec.Service.Interfaces.Auth;
 using Microsoft.EntityFrameworkCore;
+using Cybersec.Service.Interfaces.Auth;
 using Microsoft.Extensions.Configuration;
-using System.Web;
+using Cybersec.Service.Helpers;
 
 namespace Cybersec.Service.Services.Auth;
 public class ResetPasswordService(
@@ -52,7 +53,6 @@ public class ResetPasswordService(
         await existEmail.SendMessage(message);
 
         await repository.InsertAsync(passwordResetToken);
-        await repository.SaveAsync();
 
         return token;
     }
@@ -83,12 +83,10 @@ public class ResetPasswordService(
             throw new CyberException(404, "Bunday foydalanuvchi mavjud emas!");
 
         user.Password = HashPasswordHelper.PasswordHasher(model.Password1);
-        userRepository.Update(user);
+        await userRepository.UpdateAsync(user);
 
         passResetToken.IsUsed = true;
-        repository.Update(passResetToken);
-
-        await userRepository.SaveAsync();
+        await repository.UpdateAsync(passResetToken);
 
         return user.Email;
     }

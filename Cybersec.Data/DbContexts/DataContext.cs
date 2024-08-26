@@ -16,6 +16,7 @@ public class DataContext:DbContext
     public DbSet<VideoBlock> VideoBlocks { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserCode> UserCodes { get; set; }
+    public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

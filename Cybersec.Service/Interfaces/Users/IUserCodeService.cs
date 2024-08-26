@@ -1,5 +1,6 @@
 ﻿using Cybersec.Domain.Entities;
 using Cybersec.Service.DTOs.Code;
+using Cybersec.Service.Extentions;
 
 namespace Cybersec.Service.Interfaces.Users;
 public interface IUserCodeService
