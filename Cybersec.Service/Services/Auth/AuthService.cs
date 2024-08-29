@@ -8,6 +8,7 @@ using Cybersec.Data.IRepositories;
 using Cybersec.Service.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Cybersec.Service.Interfaces.Auth;
+using Microsoft.AspNetCore.Http;
 
 namespace Cybersec.Service.Services.Auth;
 public class AuthService(
@@ -15,7 +16,8 @@ public class AuthService(
     IJwtTokenService jwtTokenService,
     IMapper mapper,
     IExistEmail existEmail,
-    IUserCodeRepository userCodeRepository)
+    IUserCodeRepository userCodeRepository,
+    IHttpContextAccessor httpAccessor)
     : IAuthService
 {
     public async Task<LoginViewModel> AuthenticateAsync(LoginPostModel login)
@@ -38,6 +40,7 @@ public class AuthService(
         await userRepository.UpdateAsync(user);
 
         var userView = mapper.Map<UserViewModel>(user);
+
         (string token, DateTime expireDate) = await jwtTokenService.GenerateTokenAsync(userView);
         return new LoginViewModel
         {
@@ -127,5 +130,22 @@ public class AuthService(
             RefreshToken = user.RefreshToken,
             User = userView
         };
+    }
+
+    public async Task<bool> SaveAccessTokenAsync(LoginViewModel model)
+    {
+        var context = httpAccessor.HttpContext;
+
+        if (context is null)
+            return false;
+
+        context.Response.Cookies.Append("accessToken", model.Token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true, 
+            Expires = model.AccessTokenExpireDate
+        });
+
+        return true;
     }
 }

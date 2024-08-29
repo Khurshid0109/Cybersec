@@ -1,9 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Cybersec.Admin.Attributes;
+using Cybersec.Service.Interfaces.Articles;
+using Cybersec.Service.Interfaces.Users;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cybersec.Admin.Controllers
 {
+    [CustomAuthorize]
     public class HomeController : Controller
     {
+        private readonly IArticleService _articleService;
+        private readonly IAdminService _adminService;
+
+        public HomeController(IArticleService articleService, IAdminService adminService)
+        {
+            _articleService = articleService;
+            _adminService = adminService;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -23,15 +36,19 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Articles()
+        public async Task<IActionResult> Articles()
         {
-            return View();
+            var articles = await _articleService.GetAllArticlesAsync();
+            return View(articles);
         }
 
         [HttpGet]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            return View();
+            var id = await _adminService.GetAdminIdFromClaimsAsync();
+            var admin =await  _adminService.GetAdminByIdAsync(id);
+
+            return View(admin);
         }
 
         [HttpGet]

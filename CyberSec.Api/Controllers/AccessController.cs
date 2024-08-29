@@ -25,24 +25,25 @@ namespace Cybersec.Controllers
         [HttpGet]
         public ViewResult Login()
         {
-            // Retrieve the email from TempData
-            string? userEmail = TempData["Email"] as string;
-
-            // Pass the email to the view
-            ViewBag.Email = userEmail;
-
             return View();
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> Login(LoginPostModel model)
         {
             if (ModelState.IsValid)
             {
+                var result = await _authService.AuthenticateAsync(model);
 
+                if (result is not null)
+                {
+                    await _authService.SaveAccessTokenAsync(result);
+                    return RedirectToAction("Index","Home");
+                }
+                return View(model);
             }
 
-            return View();
+            return View(model);
         }
 
         [HttpGet]
@@ -51,13 +52,11 @@ namespace Cybersec.Controllers
             return View();
         }
 
-        [HttpPost("ExistEmail")]
+        [HttpPost]
         public async Task<IActionResult> ExistEmail(EmailModel mail)
         {
             if (ModelState.IsValid)  
             {
-                TempData["Email"] = mail;
-
                 var result = await _existEmail.EmailExistance(mail);
 
                 if (result is EmailExistanceEnum.NotFound)
@@ -75,12 +74,6 @@ namespace Cybersec.Controllers
         [HttpGet]
         public ViewResult Register()
         {
-            // Retrieve the email from TempData
-            string? userEmail = TempData["Email"] as string;
-
-            // Pass the email to the view
-            ViewBag.Email = userEmail;
-
             return View();
         }
 
@@ -92,30 +85,29 @@ namespace Cybersec.Controllers
                 var user = await _userService.CreateAsync(model);
                 return Redirect("~/Access/Verification");
             }
-            return View();
+            return View(model);
         }
 
         [HttpGet]
         public ViewResult Verification()
         {
-            // Retrieve the email from TempData
-            string? userEmail = TempData["Email"] as string;
-
-            // Pass the email to the view
-            ViewBag.Email = userEmail;
-
             return View();
         }
 
-        //[HttpPost("Verification")]
-        //public async Task<IActionResult> Verification(User)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
+        [HttpPost("Verification")]
+        public async Task<IActionResult> Verification(EmailCodeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _existEmail.VerifyCodeAsync(model.Email,model.Code);
 
-        //    }
+                if(result)
+                    return Redirect("~/Access/Login");
 
-        //    return View();
-        //}
+                return Redirect("~/Access/ExistEmail");
+            }
+
+            return View(model);
+        }
     }
 }

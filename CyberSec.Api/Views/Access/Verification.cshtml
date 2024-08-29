@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Cybersec.Service.DTOs.Auth
+@model EmailCodeModel
+@{
     Layout = null;
 }
 
@@ -16,28 +18,24 @@
             <form asp-controller="access" asp-action="Verification" method="post" enctype="multipart/form-data">
                 <h2>Verification</h2>
                 <div class="input-group">
-                    <input value="@ViewBag.Email" readonly>
-                    <label >Email</label>
+                    <input asp-for="Email" id="emailInput" readonly>
+                    <label asp-for="Email" id="label">Email</label>
+                    <span asp-validation-for="Email" class="validation"></span>
                 </div>
                 <div class="input-group">
-                    <input  type="number" required>
-                    <label >Verification Code</label>
+                    <input asp-for="Code" type="number" required>
+                    <label asp-for="Code">Verification Code</label>
+                    <span asp-validation-for="Code" class="validation"></span>
                 </div>
                
                 <button type="submit">Submit</button>
             </form>
         </div>
     </div>
+    <script>
+        let email = localStorage.getItem("email");
+
+        document.getElementById('emailInput').value = email;
+    </script>
 </body>
 </html>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('.custom-file-input').on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                $(this).next('.custom-file-label').html(fileName);
-            });
-        });
-    </script>
-}

@@ -1,22 +1,29 @@
+using Cybersec.Admin.Extentions;
 using Cybersec.Data.DbContexts;
-using Cybersec.Data.IRepositories;
-using Cybersec.Data.Repositories;
-using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.Mappers;
-using Cybersec.Service.Services.Articles;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddCustomServices(); 
 // Register DbContext
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services.AddScoped<IArticleService,ArticleService>();
-builder.Services.AddScoped<IArticleRepository,ArticleRepository>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie(options =>
+       {
+           options.LoginPath = "/Access/Login"; // Redirect to login page if not authenticated
+           options.AccessDeniedPath = "/Access/AccessDenied"; // Redirect if user doesn't have permission
+           options.Cookie.Name = "YourAppAuthCookie";
+           options.ExpireTimeSpan = TimeSpan.FromHours(0.5);
+           options.SlidingExpiration = true;
+       });
+
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -34,7 +41,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

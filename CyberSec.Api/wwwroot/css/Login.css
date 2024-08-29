@@ -13,6 +13,10 @@ body {
     background-color: black;
 }
 
+.validation {
+    color: red;
+}
+
 .wrapper {
     position: relative;
     width: 400px;
@@ -71,6 +75,10 @@ body {
             top: -5px;
         }
 
+    .input-group label.active {
+        top: -5px;
+    }
+
 .remember {
     margin: -5px 0 15px 5px;
 }
@@ -111,10 +119,23 @@ button {
 
         .signUp-link p a {
             color: #0ef;
-            font-size: 500;
+            font-size: 15px;
             text-decoration: none;
         }
 
             .signUp-link p a:hover {
                 color: red;
             }
+
+
+@media(max-width: 425px) {
+    .wrapper {
+        width: 95%;
+    }
+}
+
+@media(max-width: 355px) {
+    .input-group input {
+        width: 100%;
+    }
+}

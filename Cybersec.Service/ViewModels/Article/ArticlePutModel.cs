@@ -9,6 +9,6 @@ public class ArticlePutModel
     public List<IFormFile> Images { get; set; }
     public List<IFormFile> Videos { get; set; }
     public List<string> Texts { get; set; }
-    public List<string> Codes { get; set; }
+    public List<string?> Codes { get; set; }
     public string Orders { get; set; }
 }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Cybersec.Service.Interfaces.Articles;
+﻿using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.ViewModels.Article;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cybersec.Admin.Controllers
 {
@@ -35,6 +35,12 @@ namespace Cybersec.Admin.Controllers
             var article =await _articleService.GetArticleByIdAsync(id);
 
             return View(article);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            return View();
         }
     }
 }

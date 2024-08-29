@@ -1,6 +1,7 @@
 using Cybersec.Api.Extentions;
 using Cybersec.Api.Middlewares;
 using Cybersec.Data.DbContexts;
+using Cybersec.Service.Helpers;
 using Cybersec.Service.Mappers;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -40,6 +42,7 @@ app.Use(async (ctx, next) =>
 });
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -47,6 +50,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",

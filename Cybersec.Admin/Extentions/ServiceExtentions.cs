@@ -15,6 +15,9 @@ public static class ServiceExtentions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
 
+        services.AddScoped<IAdminRepository, AdminRepository>();
+        services.AddScoped<IAdminService, AdminService>();
+
         services.AddScoped<IArticleRepository, ArticleRepository>();
         services.AddScoped<IArticleService, ArticleService>();
 

@@ -15,6 +15,7 @@ public class DataContext:DbContext
     public DbSet<TextBlock> TextBlocks { get; set; }
     public DbSet<VideoBlock> VideoBlocks { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<UserCode> UserCodes { get; set; }
     public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 

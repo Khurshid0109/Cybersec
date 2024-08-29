@@ -21,18 +21,22 @@
                 <div class="input-group">
                     <input asp-for="FirstName" type="text" required>
                     <label asp-for="FirstName" >FirstName</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="input-group">
                     <input asp-for="LastName" type="text" required>
                     <label asp-for="LastName" >LastName</label>
+                    <span asp-validation-for="LastName" class="validation"></span>
                 </div>
                  <div class="input-group">
-                    <input  value="@ViewBag.Email"  readonly>
-                    <label  >Email</label>
+                    <input asp-for="Email" id="emailInput" readonly>
+                    <label asp-for="Email" id="label">Email</label>
+                    <span asp-validation-for="Email" class="validation"></span>
                 </div>
                 <div class="input-group">
                     <input asp-for="Password" type="password" required>
                     <label asp-for="Password" >Password</label>
+                    <span asp-validation-for="Password" class="validation"></span>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox"> I agree to the terms and conditions</label>
@@ -44,17 +48,14 @@
             </form>
         </div>
     </div>
-    
+    <script>
+        let email = localStorage.getItem("email");
+
+        document.getElementById('emailInput').value = email;
+
+        if (document.getElementById('emailInput').value) {
+            document.getElementById('label').classList.add('active')
+        }
+    </script>
 </body>
 </html>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('.custom-file-input').on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                $(this).next('.custom-file-label').html(fileName);
-            });
-        });
-    </script>
-}

@@ -1,0 +1,128 @@
+﻿@using Cybersec.Domain.Enums
+@model ArticlePutModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Edit Article";
+}
+
+<h1>Edit Article</h1>
+
+<form asp-controller="Article" asp-action="Edit" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Category"></label>
+        <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<Category>()"></select>
+    </div>
+
+    <div id="blocks-container" class="form-group">
+        @for (int i = 0; i < Model.Texts?.Count; i++)
+        {
+            <div class="text-block">
+                <input type="hidden" name="blockType" value="text" />
+                <textarea name="Texts" class="form-control">@Model.Texts[i]</textarea>
+            </div>
+        }
+
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            foreach (var image in Model.Images)
+            {
+                <div class="image-block">
+                    <input type="hidden" name="blockType" value="image" />
+                    <img src="@image.FileName" class="img-fluid" alt="Existing Image" />
+                    <input type="file" name="Images" class="form-control-file" />
+                </div>
+            }
+        }
+
+        @if (Model.Videos != null && Model.Videos.Any())
+        {
+            foreach (var video in Model.Videos)
+            {
+                <div class="video-block">
+                    <input type="hidden" name="blockType" value="video" />
+                    <video controls class="img-fluid">
+                        <source src="@video.FileName" type="video/mp4">
+                    </video>
+                    <input type="file" name="Videos" class="form-control-file" />
+                </div>
+            }
+        }
+
+        @for (int i = 0; i < Model.Codes?.Count; i++)
+        {
+            <div class="code-block">
+                <input type="hidden" name="blockType" value="code" />
+                <textarea name="Codes" class="form-control">@Model.Codes[i]</textarea>
+            </div>
+        }
+    </div>
+    <input type="hidden" id="orders" name="Orders" value="@Model.Orders" />
+    <button type="button" class="btn btn-primary" id="add-text">Add Text</button>
+    <button type="button" class="btn btn-success" id="add-image">Add Image</button>
+    <button type="button" class="btn btn-info" id="add-video">Add Video</button>
+    <button type="button" class="btn btn-warning" id="add-code">Add Code</button>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var blockCounter = @Model.Texts?.Count + @Model.Images?.Count + @Model.Videos?.Count + @Model.Codes?.Count;
+
+            function updateOrders() {
+                var orders = [];
+                $('#blocks-container').children().each(function () {
+                    var orderType = $(this).find('input[name="blockType"]').val();
+                    orders.push(orderType);
+                });
+                $('#orders').val(orders.join(','));
+            }
+
+            $('#add-text').click(function () {
+                var textBlock = `<div class="text-block">
+                                                    <input type="hidden" name="blockType" value="text" />
+                                                    <textarea name="Texts" class="form-control" placeholder="Enter text"></textarea>
+                                                 </div>`;
+                $('#blocks-container').append(textBlock);
+                blockCounter++;
+                updateOrders();
+            });
+
+            $('#add-image').click(function () {
+                var imageBlock = `<div class="image-block">
+                                                    <input type="hidden" name="blockType" value="image" />
+                                                    <input type="file" name="Images" class="form-control-file" />
+                                                  </div>`;
+                $('#blocks-container').append(imageBlock);
+                blockCounter++;
+                updateOrders();
+            });
+
+            $('#add-video').click(function () {
+                var videoBlock = `<div class="video-block">
+                                                    <input type="hidden" name="blockType" value="video" />
+                                                    <input type="file" name="Videos" class="form-control-file" />
+                                                  </div>`;
+                $('#blocks-container').append(videoBlock);
+                blockCounter++;
+                updateOrders();
+            });
+
+            $('#add-code').click(function () {
+                var codeBlock = `<div class="code-block">
+                                                    <input type="hidden" name="blockType" value="code" />
+                                                    <textarea name="Codes" class="form-control" placeholder="Enter code"></textarea>
+                                                 </div>`;
+                $('#blocks-container').append(codeBlock);
+                blockCounter++;
+                updateOrders();
+            });
+        });
+    </script>
+}

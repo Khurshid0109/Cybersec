@@ -27,12 +27,6 @@ public class ArticleService : IArticleService
     {
         var article = _mapper.Map<Article>(model);
         article.Blocks = new List<ContentBlock>();
-        // Logging the input model for debugging
-        Console.WriteLine("Orders: " + model.Orders);
-        Console.WriteLine("Texts: " + string.Join(", ", model.Texts));
-        Console.WriteLine("Images: " + model.Images.Count);
-        Console.WriteLine("Videos: " + model.Videos.Count);
-        Console.WriteLine("Codes: " + model.Codes.Count);
 
         var orderList = model.Orders.Split(',').ToList();
 

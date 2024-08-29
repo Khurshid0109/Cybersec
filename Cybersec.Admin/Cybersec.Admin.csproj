@@ -14,12 +14,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
-    <ProjectReference Include="..\Cybersec.SharedResources\Cybersec.SharedResources.csproj" />
+    <Content Remove="wwwroot\js\table.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Card.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\table.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\table.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\table.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cybersec.Service\Cybersec.Service.csproj" />
+    <ProjectReference Include="..\Cybersec.SharedResources\Cybersec.SharedResources.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Cybersec.Service.DTOs.Auth
+@model EmailModel
+@{
     Layout = null;
 }
 
@@ -14,12 +16,12 @@
     <div class="wrapper">
         <div class="form-wrapper sign-in">
 
-            <form asp-controller="Access" asp-action="ExistEmail" method="post" enctype="multipart/form-data">
+            <form id="emailForm" asp-controller="Access" asp-action="ExistEmail" method="post" enctype="multipart/form-data">
                 <h2>Email</h2>
                 <div class="input-group">
-                    <input name="email" type="text" required>
-                    <label >Email</label>
-
+                    <input asp-for="Email" id="emailInput" name="email" type="text" required>
+                    <label asp-for="Email">Email</label>
+                    <span asp-validation-for="Email" class="validation"></span>
                 </div>
                
                 <button type="submit">Submit</button>
@@ -27,6 +29,12 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById("emailForm").addEventListener("submit", function (event) {
+            let email = document.getElementById("emailInput").value;
+            localStorage.setItem("email", email);
+        });
+    </script>
 </body>
 </html>
 

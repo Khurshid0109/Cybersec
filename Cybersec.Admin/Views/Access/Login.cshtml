@@ -1,0 +1,67 @@
+﻿@model LoginDto
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/login.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login_form">
+        <setion class="login-wrapper">
+
+            <div class="logo">
+                <a target="_blank" rel="noopener" href="https://unrealnavigation.com">
+                    <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="">
+                </a>
+            </div>
+
+            <form asp-controller="Access" asp-action="Login" id="login" method="post" enctype="multipart/form-data">
+
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" required  type="text" autocapitalize="off" autocorrect="off" />
+                <span asp-validation-for="Email" class="validation"></span>
+
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="password" required  type="password" />
+                <div class="hide-show">
+                    <span>Show</span>
+                </div>
+                <span asp-validation-for="Password" class="validation"></span>
+                <button type="submit">Sign In</button>
+            </form>
+
+            </section>
+    </div>
+    <!-- Add jQuery before your script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $('.hide-show').show();
+            $('.hide-show span').addClass('show')
+
+            $('.hide-show span').click(function () {
+                if ($(this).hasClass('show')) {
+                    $(this).text('Hide');
+                    $('input[name="login[password]"]').attr('type', 'text');
+                    $(this).removeClass('show');
+                } else {
+                    $(this).text('Show');
+                    $('input[name="login[password]"]').attr('type', 'password');
+                    $(this).addClass('show');
+                }
+            });
+
+            $('form button[type="submit"]').on('click', function () {
+                $('.hide-show span').text('Show').addClass('show');
+                $('.hide-show').parent().find('input[name="login[password]"]').attr('type', 'password');
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cybersec.Domain.Entities;
+using Cybersec.Service.DTOs.Admins;
 using Cybersec.Service.DTOs.Code;
 using Cybersec.Service.DTOs.Users;
 using Cybersec.Service.ViewModels.Article;
@@ -13,6 +14,8 @@ public class MappingProfile:Profile
 		CreateMap<User, UserPostModel>().ReverseMap();
 		CreateMap<User, UserPutModel>().ReverseMap();
 		CreateMap<User, UserViewModel>().ReverseMap();
+
+        CreateMap<Admin,AdminViewModel>().ReverseMap();
 
 		// UserCode
 		CreateMap<UserCode,UserCodePostModel>().ReverseMap();
@@ -35,7 +38,7 @@ public class MappingProfile:Profile
             .ReverseMap();
 
         // Text
-        CreateMap<TextBlock, TextBlockViewModel>().ReverseMap().ReverseMap();
+        CreateMap<TextBlock, TextBlockViewModel>().ReverseMap();
 
         // Image
         CreateMap<ImageBlock, ImageBlockViewModel>().ReverseMap();

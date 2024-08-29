@@ -16,16 +16,18 @@
     <div class="wrapper">
         <div class="form-wrapper sign-in">
 
-            <form asp-controller="access" asp-action="Register" method="post" enctype="multipart/form-data">
+            <form asp-controller="access" asp-action="Login" method="post" enctype="multipart/form-data">
 
                 <h2>Login</h2>
                 <div class="input-group">
-                    <input asp-for="Email" value="@ViewBag.Email" readonly>
-                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" id="emailInput"  readonly>
+                    <label asp-for="Email" id="label" >Email</label>
+                    <span asp-validation-for="Email" class="validation"></span>
                 </div>
                 <div class="input-group">
-                    <input asp-for="Password" type="password" required>
-                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" id="pass" type="password" required>
+                    <label asp-for="Password" id="pasl" >Password</label>
+                    <span asp-validation-for="Password" class="validation"></span>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox">Rememeber me</label>
@@ -37,6 +39,20 @@
             </form>
         </div>
     </div>
+    <script>
+        let email = localStorage.getItem("email");
+
+        document.getElementById('emailInput').value = email;
+
+        // input check label
+
+        if (document.getElementById('emailInput').value) {
+            document.getElementById('label').classList.add('active')
+        }
+        if (document.getElementById('pass').value) {
+            document.getElementById('pasl').classList.add('active')
+        }
+    </script>
 </body>
 </html>
 

@@ -2,8 +2,8 @@
 {
     public enum Status
     {
-        Active,
-        Deleted,
-        Blocked
+        Active=1,
+        Deleted=2,
+        Blocked=3
     }
 }

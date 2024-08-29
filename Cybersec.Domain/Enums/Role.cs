@@ -2,6 +2,6 @@
 namespace Cybersec.Domain.Enums;
 public enum Role
 {
-    Admin,
-    SuperAdmin
+    Admin=1,
+    SuperAdmin=2
 }

@@ -1,4 +1,5 @@
-﻿using Cybersec.Domain.Enums;
+﻿using Cybersec.Api.Attributes;
+using Cybersec.Domain.Enums;
 using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -45,25 +46,6 @@ namespace Cybersec.Controllers
 
             return View(res);
         }
-
-
-        [HttpGet]
-        public ViewResult Create()
-        {
-            return View();
-        }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Create(NewsPostModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var news = await _newsService.CreateAsync(model);
-
-        //        return RedirectToAction("details", new { id = news.Id });
-        //    }
-        //    return View();
-        //}
 
     }
 }

@@ -44,7 +44,6 @@ public class JwtTokenService(
                  new("Email", user.Email),
                  new("FirstName", user.FirstName),
                  new("LastName", user.LastName),
-                 new("Phone", user.Phone),
             ]),
             Audience = configuration["JWT:Audience"],
             Issuer = configuration["JWT:Issuer"],
@@ -91,7 +90,6 @@ public class JwtTokenService(
                 Id = long.Parse(jwtToken.Claims.First(x => x.Type == "Id").Value),
                 FirstName = jwtToken.Claims.First(x => x.Type == "FirstName").Value,
                 LastName = jwtToken.Claims.First(x => x.Type == "LastName").Value,
-                Phone = jwtToken.Claims.First(x => x.Type == "Phone").Value,
                 Email = jwtToken.Claims.First(x => x.Type == "Email").Value,
                 IsVerified = true
             };

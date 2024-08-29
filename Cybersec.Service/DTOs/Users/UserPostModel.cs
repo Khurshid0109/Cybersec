@@ -9,11 +9,8 @@ public class UserPostModel:EmailModel
     public string FirstName { get; set; }
 
     [Required]
-    [MinLength(2), MaxLength(20)]
+    [MinLength(2), MaxLength(20)]   
     public string LastName { get; set; }
-
-    [Phone]
-    public string? Phone { get; set; }
 
     [Required]
     public string Password { get; set; }

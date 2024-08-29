@@ -2,100 +2,64 @@
     Layout = "_Layout";
     ViewData["Title"] = "Admins";
 }
-<div class="searchbar2">
-    <input type="text" name="" id="" placeholder="Search">
-    <div class="searchbtn">
-        <img src="./Images/search.png" class="icn srchicn" alt="search-button">
-    </div>
-</div>
+<!DOCTYPE html>
+    <html lang="en">
 
-<div class="report-container">
-    <div class="report-header">
-        <h1 class="recent-Articles">Recent Articles</h1>
-        <button class="view">View All</button>
-    </div>
-
-    <div class="report-body">
-        <div class="report-topic-heading">
-            <h3 class="t-op">Id</h3>
-            <h3 class="t-op">FirstName</h3>
-            <h3 class="t-op">LastName</h3>
-            <h3 class="t-op">Email</h3>
-            <h3 class="t-op">CreatedAt</h3>
-            <h3 class="t-op">UpdatedAt</h3>
-            <h3 class="t-op">IsVerified</h3>
-            <h3 class="t-op">Status</h3>
-        </div>
-
-        <div class="items">
-            <div class="item1">
-                <h3 class="t-op-nextlvl">1</h3>
-                <h3 class="t-op-nextlvl">Khurshid</h3>
-                <h3 class="t-op-nextlvl">Yuldoshev</h3>
-                <h3 class="t-op-nextlvl">khurshid@gmail.com</h3>
-                <h3 class="t-op-nextlvl">10.10.2024</h3>
-                <h3 class="t-op-nextlvl">14.10.2024</h3>
-                <h3 class="t-op-nextlvl">14.10.2024</h3>
-                <h3 class="t-op-nextlvl label-tag">True</h3>
-                <h3 class="t-op-nextlvl label-tag">Active</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 72</h3>
-                <h3 class="t-op-nextlvl">1.5k</h3>
-                <h3 class="t-op-nextlvl">360</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 71</h3>
-                <h3 class="t-op-nextlvl">1.1k</h3>
-                <h3 class="t-op-nextlvl">150</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 70</h3>
-                <h3 class="t-op-nextlvl">1.2k</h3>
-                <h3 class="t-op-nextlvl">420</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 69</h3>
-                <h3 class="t-op-nextlvl">2.6k</h3>
-                <h3 class="t-op-nextlvl">190</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 68</h3>
-                <h3 class="t-op-nextlvl">1.9k</h3>
-                <h3 class="t-op-nextlvl">390</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 67</h3>
-                <h3 class="t-op-nextlvl">1.2k</h3>
-                <h3 class="t-op-nextlvl">580</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 66</h3>
-                <h3 class="t-op-nextlvl">3.6k</h3>
-                <h3 class="t-op-nextlvl">160</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
-            <div class="item1">
-                <h3 class="t-op-nextlvl">Article 65</h3>
-                <h3 class="t-op-nextlvl">1.3k</h3>
-                <h3 class="t-op-nextlvl">220</h3>
-                <h3 class="t-op-nextlvl label-tag">Published</h3>
-            </div>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="~/css/table.css">
+    </head>
+    <body>
+    <div class="searchbar2">
+        <input type="text" name="" id="" placeholder="Search">
+        <div class="searchbtn">
+            <img src="~/Images/search.png" class="icn srchicn" alt="search-button">
         </div>
     </div>
-</div>
+
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <h1>Admins data</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="~/Images/search.png" alt="">
+            </div>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Admins <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Email <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Created at <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td> <img src="~/Images/admin.png" alt="">Cristiano Ronaldo</td>
+                        <td> Lissabon </td>
+                        <td> 17 Dec, 2022 </td>
+                        <td>
+                            <p class="status active">Active</p>
+                        </td>
+                        <td> 
+                            <button class="icon-edit">
+                                <img src="~/Images/edit.png" />
+                            </button> 
+                            <button class="icon-edit delete">
+                                <img src="~/Images/trash.jpg" />
+                            </button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="~/js/table.js"></script>
+    </body>
+</html>
