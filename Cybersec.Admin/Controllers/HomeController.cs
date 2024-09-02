@@ -1,4 +1,5 @@
 ﻿using Cybersec.Admin.Attributes;
+using Cybersec.Service.Extentions;
 using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,15 @@ namespace Cybersec.Admin.Controllers
     {
         private readonly IArticleService _articleService;
         private readonly IAdminService _adminService;
+        private readonly IUserService _userService;
 
-        public HomeController(IArticleService articleService, IAdminService adminService)
+        public HomeController(IArticleService articleService, 
+                              IAdminService adminService, 
+                              IUserService userService)
         {
             _articleService = articleService;
             _adminService = adminService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -24,14 +29,16 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Admins()
+        public async Task<IActionResult> Admins(PaginationParams @params,bool deleted=false)
         {
-            return View();
+            var admins = await _adminService.GetAllAsync(@params,deleted);
+            return View(admins);
         }
 
         [HttpGet]
-        public IActionResult Users()
+        public async Task<IActionResult> Users(PaginationParams @params, bool deleted = false)
         {
+            var users = await _userService.GetAllAsync (@params, deleted);
             return View();
         }
 

@@ -15,7 +15,10 @@ public class MappingProfile:Profile
 		CreateMap<User, UserPutModel>().ReverseMap();
 		CreateMap<User, UserViewModel>().ReverseMap();
 
+        //Admin
         CreateMap<Admin,AdminViewModel>().ReverseMap();
+        CreateMap<Admin,AdminPostModel>().ReverseMap();
+        CreateMap<Admin,AdminPutModel>().ReverseMap();
 
 		// UserCode
 		CreateMap<UserCode,UserCodePostModel>().ReverseMap();

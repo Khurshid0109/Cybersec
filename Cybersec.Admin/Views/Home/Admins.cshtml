@@ -1,17 +1,18 @@
-﻿@{
+﻿@model PaginationViewModel<AdminViewModel>
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Admins";
 }
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" type="text/css" href="~/css/table.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="~/css/table.css">
+</head>
+<body>
     <div class="searchbar2">
         <input type="text" name="" id="" placeholder="Search">
         <div class="searchbtn">
@@ -40,26 +41,76 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td> 1 </td>
-                        <td> <img src="~/Images/admin.png" alt="">Cristiano Ronaldo</td>
-                        <td> Lissabon </td>
-                        <td> 17 Dec, 2022 </td>
-                        <td>
-                            <p class="status active">Active</p>
-                        </td>
-                        <td> 
-                            <button class="icon-edit">
-                                <img src="~/Images/edit.png" />
-                            </button> 
-                            <button class="icon-edit delete">
-                                <img src="~/Images/trash.jpg" />
-                            </button></td>
-                    </tr>
+                    @if (Model is not null)
+                    {
+                        @foreach (var admin in Model.Items)
+                        {
+                            <tr>
+                                <td> @admin.Id </td>
+                                <td> <img src="@Url.Action("GetImage", "Media", new { fileName = admin.ImageUrl })" alt="">@admin.FullName</td>
+                                <td> @admin.Email </td>
+                                <td> @admin.CreatedAt.ToString("dd.MM.yyyy") </td>
+                                <td>
+                                    @if (admin.Status.Equals(Status.Active))
+                                    {
+                                        <p class="status active">@admin.Status</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="status inactive">@admin.Status</p>
+                                    }
+                                    <p class="status active">Active</p>
+                                </td>
+                                <td>
+                                    <button class="icon-edit">
+                                        <img src="~/Images/edit.png" />
+                                    </button>
+                                    <button class="icon-edit delete">
+                                        <img src="~/Images/trash.jpg" />
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td> 1 </td>
+                            <td> <img src="~/Images/admin.png" alt="">Cristiano Ronaldo</td>
+                            <td> ronaldo@gmail.com </td>
+                            <td> 17 Dec, 2022 </td>
+                            <td>
+                                <p class="status active">Active</p>
+                            </td>
+                            <td>
+                                <button class="icon-edit">
+                                    <img src="~/Images/edit.png" />
+                                </button>
+                                <button class="icon-edit delete">
+                                    <img src="~/Images/trash.jpg" />
+                                </button>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </section>
     </main>
     <script src="~/js/table.js"></script>
-    </body>
+</body>
 </html>

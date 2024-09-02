@@ -2,29 +2,31 @@
 @{
     var path = "D:/Projects/Cybersec/Cybersec.SharedResources/Shared";
 }
-<h1>@Model.Title</h1>
-<p>Category: @Model.Category</p>
+<div class="article-details">
+    <h1 class="article-title">@Model.Title</h1>
+    <p class="article-text">Category: @Model.Category</p>
 
-@foreach (var block in Model.Blocks.OrderBy(b => b.Order))
-{
-    switch (block)
+    @foreach (var block in Model.Blocks.OrderBy(b => b.Order))
     {
-        case TextBlockViewModel textBlock:
-            <p>@textBlock.Text</p>
-            break;
-        case ImageBlockViewModel imageBlock:
-            <img src="@Url.Action("GetImage", "Media", new { fileName = imageBlock.ImageFilePath })" class="img-fluid" />
-            break;
-        case VideoBlockViewModel videoBlock:
-            <video controls class="img-fluid">
-                <source src="@Url.Action("GetVideo", "Media", new { fileName = videoBlock.VideoFilePath })" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-            break;
-        case CodeBlockViewModel codeBlock:
-            <pre><code>@codeBlock.Code</code></pre>
-            break;
-        default:
-            throw new InvalidOperationException("Unknown content block type");
+        switch (block)
+        {
+            case TextBlockViewModel textBlock:
+                <p class="article-text">@textBlock.Text</p>
+                break;
+            case ImageBlockViewModel imageBlock:
+                <img src="@Url.Action("GetImage", "Media", new { fileName = imageBlock.ImageFilePath })" class="img-fluid" />
+                break;
+            case VideoBlockViewModel videoBlock:
+                <video controls class="img-fluid">
+                    <source src="@Url.Action("GetVideo", "Media", new { fileName = videoBlock.VideoFilePath })" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+                break;
+            case CodeBlockViewModel codeBlock:
+                <pre class="code-text"><code>@codeBlock.Code  Massachusets Texnologiya Institutida (MIT) tahsil olgan yigitlar 2023-yil aprel oyi boshida Ethereum blokcheynini qo’llab-quvvatlovchi protokollarning “birinchi turdagi manipulyatsiyasi”ni o’z ichiga olgan yangi sxema rejasini amalga oshirish uchun o’z mahoratlarini ishga solishgan.Massachusets Texnologiya Institutida (MIT) tahsil olgan yigitlar 2023-yil aprel oyi boshida Ethereum blokcheynini qo’llab-quvvatlovchi protokollarning “birinchi turdagi manipulyatsiyasi”ni o’z ichiga olgan yangi sxema rejasini amalga oshirish uchun o’z mahoratlarini ishga solishgan.Massachusets Texnologiya Institutida (MIT) tahsil olgan yigitlar 2023-yil aprel oyi boshida Ethereum blokcheynini qo’llab-quvvatlovchi protokollarning “birinchi turdagi manipulyatsiyasi”ni o’z ichiga olgan yangi sxema rejasini amalga oshirish uchun o’z mahoratlarini ishga solishgan.</code></pre>
+                break;
+            default:
+                throw new InvalidOperationException("Unknown content block type");
+        }
     }
-}
+</div>

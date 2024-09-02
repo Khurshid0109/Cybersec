@@ -6,8 +6,8 @@
 }
 
 <div class="container mt-5">
-    <div class="article-details text-center">
-        <h1 class="title font-weight-bold">@Model.Title</h1>
+    <div class="article-details2 text-center">
+        <h1 class="title font-weight-bold article-title">@Model.Title</h1>
         <h4 class="category font-weight-bold mt-3">@Model.Category</h4>
         <p class="date text-muted">@Model.CreatedAt.ToString("MMM d, yyyy")</p>
 
@@ -16,7 +16,7 @@
             {
                 if (block is TextBlockViewModel textBlock)
                 {
-                    <p class="text-block mt-3" id="description">@textBlock.Text</p>
+                    <p class="text-block mt-3 article-text" id="description">@textBlock.Text</p>
                 }
                 else if (block is ImageBlockViewModel imageBlock)
                 {
@@ -28,14 +28,40 @@
                 }
                 else if (block is CodeBlockViewModel codeBlock)
                 {
-                    <pre class="code-block mt-3"><code>@codeBlock.Code</code></pre>
+                    <pre class="code-block mt-3 code-text"><code>@codeBlock.Code</code></pre>
                 }
             }
+        </div>
+        <div style="width: 100%;">
+            <div class="detail-actions">
+                <button class="views">
+                    234 views
+                </button>
+                <div style="display: flex; gap: 20px;">
+                    <button class="comment-btn" id="comment-btn">
+                        Comments
+                    </button>
+                    <button>
+                        <img src="~/SiteImages/like.svg" />
+                    </button>
+                </div>
+
+            </div>
+            <div class="comments">
+                <p class="comment-text">Matn kiritishning har ikki tomoniga matn, tugmalar yoki tugma guruhlari, maxsus tanlovlar va maxsus fayl kiritishlari qoʻshish orqali shakl boshqaruvlarini osongina kengaytiring.</p>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Write..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <button class="input-group-text" id="basic-addon2">Send</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
+    document.getElementById('comment-btn').addEventListener("click", function(){
+        document.getElementsByClassName('comments')[0].classList.toggle('active')
+    })
     document.addEventListener("DOMContentLoaded", function () {
         var descriptionElements = document.querySelectorAll('.text-block');
         descriptionElements.forEach(function (element) {

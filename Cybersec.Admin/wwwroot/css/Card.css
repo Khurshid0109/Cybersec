@@ -49,6 +49,9 @@
 ul {
     list-style: none;
 }
+.card{
+    padding: 5px 30px;
+}
 
 .card a {
     color: inherit;

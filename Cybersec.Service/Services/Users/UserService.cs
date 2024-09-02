@@ -46,7 +46,6 @@ public class UserService(
     public async Task<bool> DeleteAsync(long id)
     {
         var user = await userRepository.SelectAll()
-             .IgnoreQueryFilters()
              .Where(u => u.Id == id)
              .FirstOrDefaultAsync();
 
@@ -65,7 +64,7 @@ public class UserService(
              .Where(u => u.Id == id)
              .FirstOrDefaultAsync();
 
-        if (user is null)
+        if (user is null || user.Status.Equals(Status.Active))
             throw new CyberException(404, "User is not found.");
 
         await userRepository.RollbackAsync(id);

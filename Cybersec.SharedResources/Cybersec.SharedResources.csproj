@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Shared\StaticImages\admin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Shared\StaticImages\admin.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Shared\Images\" />
     <Folder Include="Shared\Videos\" />
   </ItemGroup>
