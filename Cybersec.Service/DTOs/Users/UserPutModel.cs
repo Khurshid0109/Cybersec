@@ -11,6 +11,5 @@ public class UserPutModel
     [MinLength(2), MaxLength(20)]
     public string LastName { get; set; }
 
-    [Phone]
-    public string? Phone { get; set; }
+    public string? ImageUrl { get; set; }
 }

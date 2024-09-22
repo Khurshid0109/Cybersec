@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Cybersec.Data.IRepositories;
-using Cybersec.Domain.Entities;
 using Cybersec.Domain.Enums;
-using Cybersec.Service.DTOs.Admins;
-using Cybersec.Service.DTOs.Users;
-using Cybersec.Service.Exceptions;
-using Cybersec.Service.Extentions;
+using System.Security.Claims;
 using Cybersec.Service.Helpers;
+using Cybersec.Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Cybersec.Service.Extentions;
+using Cybersec.Data.IRepositories;
+using Cybersec.Service.Exceptions;
+using Cybersec.Service.DTOs.Admins;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions;
 using Cybersec.Service.Interfaces.Users;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Cybersec.Service.Services.Users;
 public class AdminService : IAdminService
@@ -21,13 +21,16 @@ public class AdminService : IAdminService
     private readonly IAdminRepository _adminRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IMapper _mapper;
+    private readonly string _sharedMediaPath;
 
     public AdminService(IAdminRepository adminRepository,
                         IHttpContextAccessor httpContextAccessor,
+                        IConfiguration configuration,
                         IMapper mapper)
     {
         _adminRepository = adminRepository;
         _httpContextAccessor = httpContextAccessor;
+        _sharedMediaPath = configuration["SharedMedia:MediaPath"];
         _mapper = mapper;
     }
 
@@ -122,11 +125,10 @@ public class AdminService : IAdminService
         return _mapper.Map<AdminViewModel>(admin);
     }
 
-    public async Task<PaginationViewModel<AdminViewModel>> GetAllAsync(PaginationParams @params, bool deleted)
+    public async Task<PaginationViewModel<AdminViewModel>> GetAllAsync(PaginationParams @params)
     {
         var admins = await _adminRepository.SelectAll()
                .IgnoreQueryFilters()
-               .Where(a => deleted ? a.Status == Status.Deleted : a.Status == Status.Active)
                .AsNoTracking()
                .ProjectTo<AdminViewModel>(_mapper.ConfigurationProvider)
                .ToPaginationAsync(@params);
@@ -159,8 +161,9 @@ public class AdminService : IAdminService
 
         var mapped = _mapper.Map<Admin>(model);
         mapped.CreatedAt = DateTime.UtcNow;
+        mapped.Role = Role.Admin;
         mapped.Password = HashPasswordHelper.PasswordHasher(model.Password);
-        mapped.ImageUrl = "StaticImages\admin.png";
+        mapped.ImageUrl = Path.Combine("Images",await MediaHelper.UploadFile(model.ImageUrl, "image"));
 
         var result = await _adminRepository.InsertAsync(mapped);
         return _mapper.Map<AdminViewModel>(result);
@@ -168,9 +171,7 @@ public class AdminService : IAdminService
 
     public async Task<AdminViewModel> UpdateAdminAsync(long id, AdminPutModel model)
     {
-        var admin = await _adminRepository.SelectAll()
-            .Where(a => a.Id == id)
-            .FirstOrDefaultAsync();
+        var admin = await _adminRepository.SelectByIdAsync(id);
 
         if (admin is null)
             throw new CyberException(404, "Admin is not found.");
@@ -178,7 +179,8 @@ public class AdminService : IAdminService
         var mapped = _mapper.Map(model, admin);
         mapped.UpdatedAt = DateTime.UtcNow;
         mapped.Password = HashPasswordHelper.PasswordHasher(model.Password);
-        
+        mapped.ImageUrl = Path.Combine("Images", await MediaHelper.UploadFile(model.ImageUrl, "image"));
+
         var result = await _adminRepository.UpdateAsync(mapped);
         return _mapper.Map<AdminViewModel>(mapped);
     }

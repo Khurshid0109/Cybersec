@@ -29,9 +29,9 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Admins(PaginationParams @params,bool deleted=false)
+        public async Task<IActionResult> Admins(PaginationParams @params)
         {
-            var admins = await _adminService.GetAllAsync(@params,deleted);
+            var admins = await _adminService.GetAllAsync(@params);
             return View(admins);
         }
 
@@ -39,7 +39,7 @@ namespace Cybersec.Admin.Controllers
         public async Task<IActionResult> Users(PaginationParams @params, bool deleted = false)
         {
             var users = await _userService.GetAllAsync (@params, deleted);
-            return View();
+            return View(users);
         }
 
         [HttpGet]

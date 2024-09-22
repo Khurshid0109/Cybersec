@@ -4,7 +4,11 @@ namespace Cybersec.Api.Controllers
 {
     public class MediaController : Controller
     {
-        private readonly string _sharedMediaPath = "D:\\Projects\\Cybersec\\Cybersec.SharedResources\\Shared";
+        private readonly string _sharedMediaPath;
+        public MediaController(IConfiguration configuration)
+        {
+            _sharedMediaPath = configuration["SharedMedia:MediaPath"];
+        }
 
         [HttpGet]
         public IActionResult GetImage([FromQuery] string fileName)

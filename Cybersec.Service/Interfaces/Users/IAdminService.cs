@@ -8,7 +8,7 @@ public interface IAdminService
     Task<bool> RegisterAsync(RegisterDto registerDto);
     Task<long> GetAdminIdFromClaimsAsync();
     Task<AdminViewModel> GetAdminByIdAsync(long id);
-    Task<PaginationViewModel<AdminViewModel>> GetAllAsync(PaginationParams @params, bool deleted);
+    Task<PaginationViewModel<AdminViewModel>> GetAllAsync(PaginationParams @params);
     Task<bool> DeleteAdminAsync(long id);
     Task<AdminViewModel> AddAdminAsync(AdminPostModel model);
     Task<AdminViewModel> UpdateAdminAsync(long id, AdminPutModel model);

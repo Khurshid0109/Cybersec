@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PaginationViewModel<UserViewModel>
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Users";
 }
@@ -18,7 +19,9 @@
             <img src="~/Images/search.png" class="icn srchicn" alt="search-button">
         </div>
     </div>
-
+    <div class="add-button">
+        <a href="@Url.Action("AddNewUser", "User")" class="">New User</a>
+    </div>
     <main class="table" id="customers_table">
         <section class="table__header">
             <h1>Users data</h1>
@@ -41,26 +44,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td> 1 </td>
-                        <td> <img src="~/Images/admin.png" alt="">Cristiano Ronaldo</td>
-                        <td> Lissabon </td>
-                        <td> 17 Dec, 2022 </td>
-                        <td>
-                            <p class="status active">True</p>
-                        </td>
-                        <td>
-                            <p class="status active">Active</p>
-                        </td>
-                        <td>
-                            <button class="icon-edit">
-                                <img src="~/Images/edit.png" />
-                            </button>
-                            <button class="icon-edit delete">
-                                <img src="~/Images/trash.jpg" />
-                            </button>
-                        </td>
-                    </tr>
+                    @if (Model is not null)
+                    {
+                        foreach (var user in Model.Items)
+                        {
+                            <tr>
+                                <td> @user.Id </td>
+                                <td> <img src="@Url.Action("GetImage", "Media", new { fileName = user.ImageUrl })" alt="">@user.FirstName @user.LastName</td>
+                                <td> @user.Email </td>
+                                <td> @user.CreatedAt.ToString("dd-MM-yyyy") </td>
+                                <td>
+                                    @if (user.IsVerified is true)
+                                    {
+                                        <p class="status active">@user.IsVerified</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="status inactive">@user.IsVerified</p>
+                                    }
+                                </td>
+                                <td>
+                                    @if (user.Status.Equals(Status.Active))
+                                    {
+                                        <p class="status active">@user.Status</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="status inactive">@user.Status</p>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="icon-edit">
+                                        <img src="~/Images/edit.png" />
+                                    </button>
+                                    <button class="icon-edit delete">
+                                        <img src="~/Images/trash.png" />
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </section>

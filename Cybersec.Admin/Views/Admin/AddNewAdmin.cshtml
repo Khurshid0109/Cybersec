@@ -1,0 +1,62 @@
+﻿@model AdminPostModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "AddNewAdmin";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="~/css/AddCart.css">
+</head>
+<body>
+    <div class="card-container">
+        <h2>New Admin</h2>
+
+        <div class="form-container">
+            <form asp-action="AddNewAdmin" asp-controller="Admin" method="Post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="FullName">Full Name</label>
+                    <input asp-for="FullName" type="text" id="fullname" required>
+                    <span asp-validation-for="FullName" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" type="text" id="email" required>
+                    <span asp-validation-for="Email" class="validation"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="text" id="password" required>
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl">Upload Profile Picture</label>
+                    <input asp-for="ImageUrl" type="file" id="profilePicture" accept=".jpg,.jpeg,.png" onchange="showFileName(event)">
+                    <span asp-validation-for="ImageUrl" class="validation"></span>
+                    <!-- Display the file name -->
+                    <span id="file-name"></span>
+                </div>
+                <button type="submit">Add Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showFileName(event) {
+            const fileInput = event.target;
+            const fileNameDisplay = document.getElementById('file-name');
+
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = "Selected file: " + fileInput.files[0].name;
+                fileNameDisplay.style.display = 'block';
+            } else {
+                fileNameDisplay.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

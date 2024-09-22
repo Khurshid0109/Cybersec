@@ -19,7 +19,9 @@
             <img src="~/Images/search.png" class="icn srchicn" alt="search-button">
         </div>
     </div>
-
+    <div class="add-button">
+        <a href="@Url.Action("AddNewAdmin", "Admin")" class="">New Admin</a>
+    </div>
     <main class="table" id="customers_table">
         <section class="table__header">
             <h1>Admins data</h1>
@@ -37,6 +39,7 @@
                         <th> Email <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Created at <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Role <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Action</th>
                     </tr>
                 </thead>
@@ -59,15 +62,15 @@
                                     {
                                         <p class="status inactive">@admin.Status</p>
                                     }
-                                    <p class="status active">Active</p>
                                 </td>
+                                <td> @admin.Role </td>
                                 <td>
-                                    <button class="icon-edit">
+                                    <a href="@Url.Action("EditAdminData", "Admin",new {Id = admin.Id})" class="icon-edit">
                                         <img src="~/Images/edit.png" />
-                                    </button>
-                                    <button class="icon-edit delete">
-                                        <img src="~/Images/trash.jpg" />
-                                    </button>
+                                    </a>
+                                    <a href="#" class="icon-edit delete">
+                                        <img src="~/Images/trash.png" />
+                                    </a>
                                 </td>
                             </tr>
                         }
@@ -83,32 +86,78 @@
                                 <p class="status active">Active</p>
                             </td>
                             <td>
-                                <button class="icon-edit">
+                                <a href="#" class="icon-edit edit">
                                     <img src="~/Images/edit.png" />
-                                </button>
+                                </a>
                                 <button class="icon-edit delete">
-                                    <img src="~/Images/trash.jpg" />
+                                    <img src="~/Images/trash.png" />
                                 </button>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <nav aria-label="...">
+            @*  <nav aria-label="...">
+            <ul class="pagination">
+            <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+            <span class="page-link">2</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+            </li>
+            </ul>
+            </nav> *@
+            <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <span class="page-link">Previous</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link">2</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
+                    @if (Model.PageNumber > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("Admins", new { pageNumber = Model.PageNumber - 1 })">Previous</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">Previous</span>
+                        </li>
+                    }
+
+                    @for (int i = 1; i <= Model.MaxPageNumber; i++)
+                    {
+                        if (i == Model.PageNumber)
+                        {
+                            <li class="page-item active">
+                                <span class="page-link">@i</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Admins", new { pageNumber = i })">@i</a>
+                            </li>
+                        }
+                    }
+
+                    @if (Model.PageNumber < Model.MaxPageNumber)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("Admins", new { pageNumber = Model.PageNumber + 1 })">Next</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">Next</span>
+                        </li>
+                    }
                 </ul>
             </nav>
+
         </section>
     </main>
     <script src="~/js/table.js"></script>

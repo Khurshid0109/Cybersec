@@ -34,6 +34,7 @@ public class UserService(
 
         var mapped = mapper.Map<User>(model);
         mapped.CreatedAt = DateTime.UtcNow;
+        mapped.ImageUrl = Path.Combine("StaticImages","StaticImages\admin.png");
         mapped.Password = HashPasswordHelper.PasswordHasher(model.Password);
 
         var result = await userRepository.InsertAsync(mapped);
@@ -70,7 +71,7 @@ public class UserService(
         await userRepository.RollbackAsync(id);
 
         return true;
-    }
+    } 
 
     public async Task<PaginationViewModel<UserViewModel>> GetAllAsync(PaginationParams @params, bool deleted = false)
     {
@@ -196,5 +197,26 @@ public class UserService(
         }
 
         throw new CyberException(403, "Kod xato kiritildi!");
+    }
+
+    public async Task<UserViewModel> CreateByAdminAsync(UserPostModel model)
+    {
+        var user = await userRepository.SelectAll()
+            .IgnoreQueryFilters()
+            .Where(u => u.Email == model.Email)
+            .FirstOrDefaultAsync();
+
+        if (user is not null)
+            throw new CyberException(409, "You have already registered,please Login!");
+
+        var mapped = mapper.Map<User>(model);
+        mapped.CreatedAt = DateTime.UtcNow;
+        mapped.ImageUrl = Path.Combine("StaticImages","admin.png");
+        mapped.isVerified = true;
+        mapped.Password = HashPasswordHelper.PasswordHasher(model.Password);
+
+        var result = await userRepository.InsertAsync(mapped);
+
+        return mapper.Map<UserViewModel>(result);
     }
 }

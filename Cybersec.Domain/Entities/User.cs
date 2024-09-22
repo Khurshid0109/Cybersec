@@ -7,7 +7,7 @@ public class User:Auditable
     public string LastName { get; set; } 
     public string Email { get; set; }
     public string Password { get; set; }
-    public string? ImageUrl { get; set; }
+    public string ImageUrl { get; set; }
     public bool isVerified { get; set; } = false;
     public string RefreshToken { get; set; } =string.Empty;
     public DateTime ExpireDate { get; set; }

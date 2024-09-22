@@ -1,0 +1,63 @@
+﻿.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 900;
+    color: #333;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+    input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+        border-bottom: 2px solid #007BFF;
+    }
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+#file-name {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+    display: none;
+}

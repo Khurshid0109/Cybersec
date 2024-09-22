@@ -14,14 +14,16 @@ public class MappingProfile:Profile
 		CreateMap<User, UserPostModel>().ReverseMap();
 		CreateMap<User, UserPutModel>().ReverseMap();
 		CreateMap<User, UserViewModel>().ReverseMap();
+        CreateMap<User,UserByAdminPutModel>().ReverseMap();
 
         //Admin
         CreateMap<Admin,AdminViewModel>().ReverseMap();
         CreateMap<Admin,AdminPostModel>().ReverseMap();
-        CreateMap<Admin,AdminPutModel>().ReverseMap();
+        CreateMap<Admin, AdminPutModel>().ReverseMap()
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
-		// UserCode
-		CreateMap<UserCode,UserCodePostModel>().ReverseMap();
+        // UserCode
+        CreateMap<UserCode,UserCodePostModel>().ReverseMap();
 		CreateMap<UserCode,UserCodeViewModel>().ReverseMap();
 
         // Article

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cybersec.Service", "Cyberse
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cybersec.Admin", "Cybersec.Admin\Cybersec.Admin.csproj", "{4B715E12-EEEA-4465-9E92-08E0FBC16A9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cybersec.SharedResources", "Cybersec.SharedResources\Cybersec.SharedResources.csproj", "{3F07B859-E58E-4A89-AC57-33E708F235EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cybersec.SharedResources", "Cybersec.SharedResources\Cybersec.SharedResources.csproj", "{3F07B859-E58E-4A89-AC57-33E708F235EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
