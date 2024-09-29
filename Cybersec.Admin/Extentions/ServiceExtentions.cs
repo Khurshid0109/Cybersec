@@ -29,6 +29,7 @@ public static class ServiceExtentions
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IExistEmail, EmailExist>();
+
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IResetPasswordService, ResetPasswordService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

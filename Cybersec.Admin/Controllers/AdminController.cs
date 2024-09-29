@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Cybersec.Service.DTOs.Admins;
 using Cybersec.Service.Interfaces.Users;
-
+ 
 namespace Cybersec.Admin.Controllers
 {
     public class AdminController : Controller

@@ -219,4 +219,24 @@ public class UserService(
 
         return mapper.Map<UserViewModel>(result);
     }
+
+    async Task<UserViewModel> IUserService.UpdateByAdminAsync(long id, UserByAdminPutModel model)
+    {
+        var user = await userRepository.SelectAll()
+             .Where(u => u.Id == id)
+             .FirstOrDefaultAsync();
+
+        if(user is null)
+            throw new CyberException(404, "User is not found!");
+
+        var mapped = mapper.Map(model, user);
+        mapped.UpdatedAt = DateTime.UtcNow;
+        mapped.Password = HashPasswordHelper.PasswordHasher(model.Password);
+
+        if(model.ImageUrl is not null)
+            mapped.ImageUrl = model.ImageUrl;
+
+        var result = await userRepository.UpdateAsync(mapped);
+        return mapper.Map<UserViewModel>(result);
+    }
 }

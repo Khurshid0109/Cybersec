@@ -12,6 +12,7 @@ public interface IUserService
     Task<UserViewModel> CreateAsync(UserPostModel model);
     Task<UserViewModel> CreateByAdminAsync(UserPostModel model);
     Task<UserViewModel> UpdateAsync(long id, UserPutModel model);
+    Task<UserViewModel> UpdateByAdminAsync(long id, UserByAdminPutModel model);
     Task<bool> CheckPreviousPassword(long id, string password);
     Task<bool> ChangePasswordAsync(long id, string oldPassword, string newPassword);
     Task<bool> ChangeEmailAsync(long userID, string email, long code);

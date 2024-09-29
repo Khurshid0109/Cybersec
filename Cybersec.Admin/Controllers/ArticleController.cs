@@ -1,6 +1,6 @@
-﻿using Cybersec.Service.Interfaces.Articles;
+﻿using Microsoft.AspNetCore.Mvc;
 using Cybersec.Service.ViewModels.Article;
-using Microsoft.AspNetCore.Mvc;
+using Cybersec.Service.Interfaces.Articles;
 
 namespace Cybersec.Admin.Controllers
 {

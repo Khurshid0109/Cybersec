@@ -184,4 +184,10 @@ public class AdminService : IAdminService
         var result = await _adminRepository.UpdateAsync(mapped);
         return _mapper.Map<AdminViewModel>(mapped);
     }
+
+    public async Task LogoutAsync()
+    {
+        await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
 }

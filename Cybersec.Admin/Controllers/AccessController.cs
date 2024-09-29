@@ -35,6 +35,12 @@ namespace Cybersec.Admin.Controllers
             return View(loginDto);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _adminService.LogoutAsync(); 
+            return RedirectToAction("Login", "Access"); 
+        }
 
     }
 }

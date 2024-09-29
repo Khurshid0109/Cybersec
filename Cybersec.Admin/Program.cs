@@ -1,4 +1,5 @@
 using Cybersec.Admin.Extentions;
+using Cybersec.Admin.Middlewares;
 using Cybersec.Data.DbContexts;
 using Cybersec.Service.Mappers;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -16,7 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
        {
            options.LoginPath = "/Access/Login"; // Redirect to login page if not authenticated
            options.AccessDeniedPath = "/Access/AccessDenied"; // Redirect if user doesn't have permission
-           options.Cookie.Name = "YourAppAuthCookie";
+           options.Cookie.Name = "CybersecAuth";
            options.ExpireTimeSpan = TimeSpan.FromHours(0.5);
            options.SlidingExpiration = true;
        });
@@ -38,6 +39,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+//app.UseMiddleware<AuthRedirectMiddleware>();
 
 app.UseRouting();
 

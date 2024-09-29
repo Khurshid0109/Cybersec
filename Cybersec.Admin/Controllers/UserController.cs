@@ -1,7 +1,5 @@
-﻿using Cybersec.Service.DTOs.Admins;
-using Cybersec.Service.DTOs.Users;
+﻿using Cybersec.Service.DTOs.Users;
 using Cybersec.Service.Interfaces.Users;
-using Cybersec.Service.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cybersec.Admin.Controllers
@@ -37,12 +35,15 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditAdminData(long id)
+        public async Task<IActionResult> EditUserData(long id)
         {
             var user = await _userService.GetByIdAsync(id);
             var mapped = new UserByAdminPutModel
             {
-               
+               FirstName = user.FirstName,
+               LastName = user.LastName,
+               Email = user.Email,
+               Status = user.Status
             };
 
             ViewBag.Id = id;
@@ -50,7 +51,7 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAdminDAta(long id, AdminPutModel model)
+        public async Task<IActionResult> EditUserData(long id, UserByAdminPutModel model)
         {
             try
             {
@@ -58,8 +59,8 @@ namespace Cybersec.Admin.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var admin = await _adminService.UpdateAdminAsync(id, model);
-                return RedirectToAction("Admins", "Home");
+                var admin = await _userService.UpdateByAdminAsync(id, model);
+                return RedirectToAction("Users", "Home");
             }
             catch (Exception ex)
             {

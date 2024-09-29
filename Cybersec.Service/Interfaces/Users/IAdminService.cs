@@ -12,4 +12,5 @@ public interface IAdminService
     Task<bool> DeleteAdminAsync(long id);
     Task<AdminViewModel> AddAdminAsync(AdminPostModel model);
     Task<AdminViewModel> UpdateAdminAsync(long id, AdminPutModel model);
+    Task LogoutAsync();
 }
