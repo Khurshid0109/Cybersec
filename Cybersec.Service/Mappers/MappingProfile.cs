@@ -64,6 +64,7 @@ public class MappingProfile:Profile
         // Comment
         CreateMap<Comment,CommentPostModel>().ReverseMap();
         CreateMap<Comment,CommentViewModel>().ReverseMap();
+        CreateMap<Comment,CommentPutModel>().ReverseMap();
 
     }
 }
