@@ -24,16 +24,21 @@ public static class ServiceExtentions
         services.AddScoped<IArticleRepository,ArticleRepository>();
         services.AddScoped<IArticleService, ArticleService>();
 
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ILikeRepository,LikeRepository>();
+        services.AddScoped<ILikeService,LikeService>();
+
+        services.AddScoped<ICommentRepository,CommentRepository>();
+        services.AddScoped<ICommentService,CommentService>();
 
         services.AddScoped<IUserCodeRepository,UserCodeRepository>();
         services.AddScoped<IUserCodeService, UserCodeService>();
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IExistEmail, EmailExist>();
+
         services.AddScoped<IJwtTokenService,JwtTokenService>();
         services.AddScoped<IResetPasswordService, ResetPasswordService>();
+
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
     }
     public static void AddJwtService(this IServiceCollection services, IConfiguration configuration)

@@ -1,4 +1,5 @@
 ﻿using Cybersec.Admin.Attributes;
+using Cybersec.Service.DTOs.Admins;
 using Cybersec.Service.Extentions;
 using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.Interfaces.Users;
@@ -59,9 +60,17 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Settings()
+        public async Task<IActionResult> Settings()
         {
-            return View();
+            var id = await _adminService.GetAdminIdFromClaimsAsync();
+            var admin = await _adminService.GetAdminByIdAsync(id);
+
+            var mapped = new AdminSettingsModel
+            {
+                FullName = admin.FullName,
+            };
+            ViewBag.Id = id;
+            return View(mapped);
         }
     }
 }

@@ -2,6 +2,8 @@
 using Cybersec.Domain.Entities;
 using Cybersec.Service.DTOs.Admins;
 using Cybersec.Service.DTOs.Code;
+using Cybersec.Service.DTOs.Comment;
+using Cybersec.Service.DTOs.Like;
 using Cybersec.Service.DTOs.Users;
 using Cybersec.Service.ViewModels.Article;
 
@@ -19,6 +21,7 @@ public class MappingProfile:Profile
         //Admin
         CreateMap<Admin,AdminViewModel>().ReverseMap();
         CreateMap<Admin,AdminPostModel>().ReverseMap();
+        CreateMap<Admin,AdminSettingsModel>().ReverseMap();
         CreateMap<Admin, AdminPutModel>().ReverseMap()
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
 
@@ -53,5 +56,14 @@ public class MappingProfile:Profile
 
         // Code
         CreateMap<CodeBlock, CodeBlockViewModel>().ReverseMap();
+
+        // Like
+        CreateMap<Like,LikePostModel>().ReverseMap();
+        CreateMap<Like,LikeViewModel>().ReverseMap();
+
+        // Comment
+        CreateMap<Comment,CommentPostModel>().ReverseMap();
+        CreateMap<Comment,CommentViewModel>().ReverseMap();
+
     }
 }

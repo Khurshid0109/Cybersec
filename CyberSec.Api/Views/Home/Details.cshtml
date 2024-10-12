@@ -35,14 +35,14 @@
         <div style="width: 100%;">
             <div class="detail-actions">
                 <button class="views">
-                    234 views
+                    @Model.ViewCount views
                 </button>
                 <div style="display: flex; gap: 20px;">
                     <button class="comment-btn" id="comment-btn">
                         Comments
                     </button>
-                    <button>
-                        <img src="~/SiteImages/like.svg" />
+                    <button id="like-btn">
+                        <img id="like-image" src="~/SiteImages/like.svg" alt="Like Button" />
                     </button>
                 </div>
 
@@ -59,14 +59,59 @@
 </div>
 
 <script>
-    document.getElementById('comment-btn').addEventListener("click", function(){
-        document.getElementsByClassName('comments')[0].classList.toggle('active')
-    })
-    document.addEventListener("DOMContentLoaded", function () {
-        var descriptionElements = document.querySelectorAll('.text-block');
-        descriptionElements.forEach(function (element) {
-            var descriptionText = element.innerHTML;
-            element.innerHTML = descriptionText.replace(/\./g, '.<br><br>');
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the button and image element
+        const likeButton = document.getElementById('like-btn');
+        const likeImage = document.getElementById('like-image');
+
+        //  Article ID for the API request
+        const articleId = '@Model.Id';  
+
+        // Function to toggle like status
+        function toggleLikeStatus() {
+            fetch(`/api/Home/ToggleLikeStatus?articleId=${articleId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    console.log("response", response);
+                    return response.json();
+                })
+                .then(data => {
+                    // Check the like status in the response
+                    if (data.isLiked) {
+                        // User liked the article, change the image to Like2.jpg
+                        likeImage.src = '/SiteImages/like2.svg';
+                    } 
+                    else {
+                        // User unliked the article, change the image to Like.jpg
+                        likeImage.src = '/SiteImages/like.svg';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Add an event listener to the like button
+        likeButton.addEventListener('click', function () {
+            toggleLikeStatus();
         });
+
+        // Call API on page load to set the initial image state
+        fetch(`/api/Home/toggle?articleId=${articleId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.isLiked) {
+                    likeImage.src = '/SiteImages/like2.svg'; 
+                } else {
+                    likeImage.src = '/SiteImages/like.svg'; 
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
 </script>

@@ -73,7 +73,7 @@
 
                 <!--For brand icon-->
                 <div class="ms-auto d-flex align-items-center">
-                    <img src="~/Images/logo.jpg" asp-append-version="true" style="width:30px; height:30px; border-radius:50%;" />
+                    <img src="~/SiteImages/logo.jpg" asp-append-version="true" style="width:30px; height:30px; border-radius:50%;" />
                     <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index" asp-route-category="">Cybersec Blog</a>
                 </div>
 
@@ -147,19 +147,17 @@
     </footer>
 
 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-       let modal = document.getElementById('modal');
-       modal.addEventListener('click', function () {
+        let modal = document.getElementById('modal');
+        modal.addEventListener('click', function () {
             document.getElementsByClassName('mobile-nav')[0].classList.toggle('active')
-           
-       });
+
+        });
     </script>
     @await RenderSectionAsync("Scripts", required: false)
-
 
 </body>
 </html>

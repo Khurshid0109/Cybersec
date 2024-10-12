@@ -35,6 +35,7 @@
     .user-data h3 {
         font-size: 20px;
         font-weight: 700;
+        padding:0 10px;
     }
 
 .user-image {
@@ -89,9 +90,43 @@ ul {
 
 .btn {
     border: 2px solid silver;
-    background-color: white;
+    background-color: #4b49ac;
 }
 
 body .footer[b-u144jrqpik] {
     position: relative;
+}
+
+.report-container{
+    overflow-y:scroll;
+    max-height:calc(100vh - 120px);
+    margin-bottom:20px;
+}
+    .report-container::-webkit-scrollbar {
+        width: 0px;
+    }
+
+.form-group {
+    margin: 20px;
+}
+
+.form-group label{
+    margin:10px;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid silver;
+}
+
+.btn-wide {
+    margin: 0 auto;
+    display:block;
+    width: 90%;
+}
+
+
+hr {
+    margin: 20px 0;
 }

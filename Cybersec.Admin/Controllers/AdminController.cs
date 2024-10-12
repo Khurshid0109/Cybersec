@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Cybersec.Service.DTOs.Admins;
 using Cybersec.Service.Interfaces.Users;
- 
+
 namespace Cybersec.Admin.Controllers
 {
     public class AdminController : Controller
@@ -53,7 +53,7 @@ namespace Cybersec.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAdminDAta(long id,AdminPutModel model)
+        public async Task<IActionResult> EditAdminData(long id,AdminPutModel model)
         {
             try
             {
@@ -69,6 +69,20 @@ namespace Cybersec.Admin.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> AdminNameSettings(long id, AdminSettingsModel model)
+        {
+            try
+            {
+                var result = await _adminService.UpdateAdminSettingsAsync(id, model);
+
+                return RedirectToAction("Profile", "Home",new {Id = id});
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

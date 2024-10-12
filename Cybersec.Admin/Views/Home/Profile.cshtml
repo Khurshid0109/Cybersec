@@ -11,6 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="~/css/Card.css">
+    <style>
+        body{
+            background-image:url("../Images/Mars.jpg");
+            background-repeat:no-repeat;
+            background-size:cover;
+        }
+    </style>
 </head>
 <body>
     @{
@@ -30,11 +37,11 @@
                 <img src="@Url.Action("GetImage", "Media", new { fileName = Model.ImageUrl })" class="user-image" alt="Image">
             </div>
             <div class="user-data">
-                <h3>FirstName:@firstName</h3>
-                <h3>LastName:@lastName</h3>
-                <h3>Email:@Model.Email</h3>
-                <h3>Role:@Model.Role</h3>
-                <h3>Status:@Model.Status</h3>
+                <h3>FirstName : @firstName</h3>
+                <h3>LastName : @lastName</h3>
+                <h3>Email : @Model.Email</h3>
+                <h3>Role : @Model.Role</h3>
+                <h3>Status : @Model.Status</h3>
             </div>
         </div>
    </div>

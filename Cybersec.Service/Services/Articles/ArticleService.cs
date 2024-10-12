@@ -26,6 +26,7 @@ public class ArticleService : IArticleService
     public async Task<ArticleViewModel> CreateArticleAsync(ArticlePostModel model)
     {
         var article = _mapper.Map<Article>(model);
+        article.ViewCount = 0;
         article.Blocks = new List<ContentBlock>();
 
         var orderList = model.Orders.Split(',').ToList();
@@ -113,11 +114,13 @@ public class ArticleService : IArticleService
         var article = await _articleRepo.SelectAll()
              .Where(a => a.Id == id)
              .Include(a => a.Blocks)
-             .AsNoTracking()
              .FirstOrDefaultAsync();
 
         if (article is null)
             throw new CyberException(404, "Article is not found");
+
+        article.ViewCount++;
+        await _articleRepo.UpdateAsync(article);
 
         return _mapper.Map<ArticleViewModel>(article);
     }

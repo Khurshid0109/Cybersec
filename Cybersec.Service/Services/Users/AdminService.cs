@@ -30,7 +30,7 @@ public class AdminService : IAdminService
     {
         _adminRepository = adminRepository;
         _httpContextAccessor = httpContextAccessor;
-        _sharedMediaPath = configuration["SharedMedia:MediaPath"];
+        _sharedMediaPath = configuration["SharedMedia:MediaPath"]?? "D:\\Projects\\Cybersec\\Cybersec.SharedResources\\Shared";
         _mapper = mapper;
     }
 
@@ -183,6 +183,27 @@ public class AdminService : IAdminService
 
         var result = await _adminRepository.UpdateAsync(mapped);
         return _mapper.Map<AdminViewModel>(mapped);
+    }
+
+    public async Task<AdminViewModel> UpdateAdminSettingsAsync(long id,AdminSettingsModel model)
+    {
+        var admin = await _adminRepository.SelectAll()
+            .Where(a => a.Id == id)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        if (admin is null)
+            throw new CyberException(404, "Admin is not found!");
+
+        var mapped = _mapper.Map(model, admin);
+        mapped.UpdatedAt = DateTime.UtcNow;
+
+        if (model.ImageUrl is not null)
+            mapped.ImageUrl = Path.Combine("Images",await MediaHelper.UploadFile(model.ImageUrl, "image"));
+
+        var result = await _adminRepository.UpdateAsync(mapped);
+
+        return _mapper.Map<AdminViewModel>(result);
     }
 
     public async Task LogoutAsync()

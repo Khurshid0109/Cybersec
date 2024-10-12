@@ -1,4 +1,5 @@
 ﻿using Cybersec.Domain.Commons;
+using System.Xml.Linq;
 
 namespace Cybersec.Domain.Entities;
 public class User:Auditable
@@ -12,4 +13,9 @@ public class User:Auditable
     public string RefreshToken { get; set; } =string.Empty;
     public DateTime ExpireDate { get; set; }
     public ICollection<UserCode> USerCodes { get; set; }
+    // Navigation property for Likes
+    public virtual ICollection<Like> Likes { get; set; }
+
+    // Navigation property for Comments
+    public virtual ICollection<Comment> Comments { get; set; }
 }

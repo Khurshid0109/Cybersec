@@ -1,4 +1,4 @@
-﻿using Cybersec.Api.Attributes;
+﻿using Cybersec.Api.Extentions;
 using Cybersec.Domain.Enums;
 using Cybersec.Service.Interfaces.Articles;
 using Cybersec.Service.ViewModels;
@@ -9,10 +9,16 @@ namespace Cybersec.Controllers
     public class HomeController : Controller
     {
         private readonly IArticleService _articleService;
+        private readonly ILikeService _likeService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HomeController(IArticleService articleService)
+        public HomeController(IArticleService articleService,
+                              IHttpContextAccessor httpContextAccessor,
+                              ILikeService likeService)
         {
             _articleService = articleService;
+            _httpContextAccessor = httpContextAccessor;
+            _likeService = likeService;
         }
 
         [HttpGet, Route("/"), Route("/home"), Route("/home/index/{category}")]
@@ -47,5 +53,22 @@ namespace Cybersec.Controllers
             return View(res);
         }
 
+        [HttpPost("ToggleLikeStatus")]
+        public async Task<IActionResult> ToggleLikeStatus(long articleId)
+        {
+            // Logic for toggling like status
+            // Return JSON response with isLiked property
+            return Ok(new { isLiked = true });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLikeStatus(long articleId)
+        {
+            var user = HttpContextExtention.GetUser(_httpContextAccessor.HttpContext);
+
+            var result = await _likeService.IsLikedBefore(user.Id, articleId);
+            // Logic for returning like status
+            return Ok(new { isLiked = result });
+        }
     }
 }

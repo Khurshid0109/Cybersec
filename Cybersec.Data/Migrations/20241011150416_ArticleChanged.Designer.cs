@@ -3,6 +3,7 @@ using System;
 using Cybersec.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cybersec.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241011150416_ArticleChanged")]
+    partial class ArticleChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,41 +90,9 @@ namespace Cybersec.Data.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("ViewCount")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("Cybersec.Domain.Entities.Comment", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ArticleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Cybersec.Domain.Entities.ContentBlock", b =>
@@ -160,31 +131,6 @@ namespace Cybersec.Data.Migrations
                     b.HasDiscriminator<string>("ContentType").HasValue("ContentBlock");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Cybersec.Domain.Entities.Like", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ArticleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Like");
                 });
 
             modelBuilder.Entity("Cybersec.Domain.Entities.PasswordResetToken", b =>
@@ -354,25 +300,6 @@ namespace Cybersec.Data.Migrations
                     b.HasDiscriminator().HasValue("Video");
                 });
 
-            modelBuilder.Entity("Cybersec.Domain.Entities.Comment", b =>
-                {
-                    b.HasOne("Cybersec.Domain.Entities.Article", "Article")
-                        .WithMany("Comments")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cybersec.Domain.Entities.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Cybersec.Domain.Entities.ContentBlock", b =>
                 {
                     b.HasOne("Cybersec.Domain.Entities.Article", "Article")
@@ -382,25 +309,6 @@ namespace Cybersec.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Article");
-                });
-
-            modelBuilder.Entity("Cybersec.Domain.Entities.Like", b =>
-                {
-                    b.HasOne("Cybersec.Domain.Entities.Article", "Article")
-                        .WithMany("Likes")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cybersec.Domain.Entities.User", "User")
-                        .WithMany("Likes")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Cybersec.Domain.Entities.PasswordResetToken", b =>
@@ -428,18 +336,10 @@ namespace Cybersec.Data.Migrations
             modelBuilder.Entity("Cybersec.Domain.Entities.Article", b =>
                 {
                     b.Navigation("Blocks");
-
-                    b.Navigation("Comments");
-
-                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("Cybersec.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Likes");
-
                     b.Navigation("USerCodes");
                 });
 #pragma warning restore 612, 618

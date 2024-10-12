@@ -13,8 +13,8 @@ body {
     font-weight: bolder;
 }
 
-.nav-item a:hover{
-    color:lawngreen !important
+.nav-item a:hover {
+    color: lawngreen !important
 }
 
 .navbar-brand {
@@ -49,8 +49,9 @@ ul {
     width: 100%;
     height: 250px;
 }
-header{
-    width:100%;
+
+header {
+    width: 100%;
 }
 
 .custom-img-right {
@@ -123,7 +124,7 @@ body .footer[b-u144jrqpik] {
 }
 
 
-.mobile-nav{
+.mobile-nav {
     width: 100vw;
     height: 100vh;
     background: #333;
@@ -135,17 +136,17 @@ body .footer[b-u144jrqpik] {
     display: none;
     padding: 10px 20px;
 }
+
     .mobile-nav.active {
         left: 0;
     }
 
 
-.detail-actions{
+.detail-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-
 }
 
     .detail-actions button {
@@ -155,43 +156,65 @@ body .footer[b-u144jrqpik] {
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        border: 1px solid gray;
-    }
-    .detail-actions button:first-child{
-        border-radius: 5px;
-        width: auto;
-        text-wrap: no-wrap;
-        padding: 8px 20px;
-        margin-right: auto;
-    }
-    .comment-btn{
+        border: 2px solid lawngreen;
         background: transparent;
         color: lawngreen;
-        text-decoration: underline;
-        border: 0;
     }
-.comments{
-    margin-top: 60px;
 
+        .detail-actions button:first-child {
+            border-radius: 5px;
+            width: auto;
+            text-wrap: no-wrap;
+            padding: 8px 20px;
+            margin-right: auto;
+        }
+
+.comment-btn {
+    text-decoration: none;
+}
+
+.comments {
+    margin-top: 60px;
     width: 100%;
     height: 400px;
-    background: #fff;
-    border: 1px solid #333;
+    background: transparent;
+    border: 3px solid lawngreen;
     border-radius: 5px;
     display: none;
     position: relative;
-    padding: 20px 50px 5px 50px;
+    padding: 20px 50px 5px 30px;
 }
-.comments .input-group{
-    position:absolute;
-    bottom: -20px;
-    left: 0;
-    margin: 0px 0px;
-    height: 60px;
+
+    .comments .input-group {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        margin: 0px 0px;
+        height: 60px;
+        border: 3px solid lawngreen;
+    }
+
+    .comments .comment-text {
+        color: whitesmoke;
+        background: transparent;
+        border: 1px solid lawngreen;
+    }
+
+.input-group .form-control {
+    background: transparent;
+    color: whitesmoke;
+    font-weight:bolder;
 }
-.input-group-text{
+
+.input-group .input-group-text {
     cursor: pointer;
 }
+
+.input-group .input-group-text :hover {
+    background: lawngreen;
+    color: black;
+}
+
 .comment-text {
     background: #808080;
     padding: 8px;
@@ -201,16 +224,13 @@ body .footer[b-u144jrqpik] {
     color: #fff;
     text-align: left;
 }
-.comments.active{
+
+.comments.active {
     display: block;
 }
 
 @media(max-width: 800px) {
-    .mobile-nav{
+    .mobile-nav {
         display: block;
     }
 }
-
-
-
-
