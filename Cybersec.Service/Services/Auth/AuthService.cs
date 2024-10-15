@@ -27,6 +27,7 @@ public class AuthService(
             .FirstOrDefaultAsync();
 
         if (user is null || !HashPasswordHelper.IsEqual(login.Password, user.Password))
+            
             throw new CyberException(404, "Email yoki parol xato!");
 
         if (user.Status == Status.Deleted)

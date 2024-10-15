@@ -1,5 +1,5 @@
-﻿using Cybersec.Domain.Entities;
-using Cybersec.Domain.Enums;
+﻿using Cybersec.Domain.Enums;
+using Cybersec.Service.DTOs.Comment;
 using Cybersec.Service.DTOs.Like;
 
 namespace Cybersec.Service.ViewModels.Article;
@@ -12,6 +12,6 @@ public class ArticleViewModel
     public DateTime? UpdatedAt { get; set; }
     public int ViewCount { get; set; }
     public  ICollection<LikeViewModel> Likes { get; set; }
-    public  ICollection<Comment> Comments { get; set; }
+    public  ICollection<CommentViewModel> Comments { get; set; }
     public List<ContentBlockViewModel> Blocks { get; set; }
 }

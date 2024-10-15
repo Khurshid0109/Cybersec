@@ -5,7 +5,7 @@ public class JwtMiddleware(RequestDelegate next)
 {
     public async Task InvokeAsync(HttpContext context, IJwtTokenService jwtTokenService, ILogger<JwtMiddleware> logger)
     {
-        var accessToken = context.Request.Headers.Authorization.FirstOrDefault()?.Split("Bearer ").Last();
+        var accessToken = context.Request.Cookies["accessToken"];
         try
         {
             if (!string.IsNullOrEmpty(accessToken))

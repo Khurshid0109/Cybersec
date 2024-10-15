@@ -28,6 +28,19 @@ public class DataContext:DbContext
             .HasValue<VideoBlock>("Video")
             .HasValue<CodeBlock>("Code");
 
+        modelBuilder.Entity<Like>()
+       .HasKey(l => l.Id);
+
+        modelBuilder.Entity<Like>()
+            .HasOne(l => l.Article)
+            .WithMany(a => a.Likes)
+            .HasForeignKey(l => l.ArticleId);
+
+        modelBuilder.Entity<Like>()
+            .HasOne(l => l.User)
+            .WithMany(u => u.Likes)
+            .HasForeignKey(l => l.UserId);
+
         base.OnModelCreating(modelBuilder);
     }
 }

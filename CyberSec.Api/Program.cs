@@ -41,8 +41,8 @@ app.Use(async (ctx, next) =>
 
 });
 
-app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

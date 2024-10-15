@@ -149,7 +149,8 @@ body .footer[b-u144jrqpik] {
     width: 100%;
 }
 
-    .detail-actions button {
+    .detail-actions button,
+    .detail-actions a{
         width: 50px;
         height: 50px;
         display: flex;
@@ -160,8 +161,20 @@ body .footer[b-u144jrqpik] {
         background: transparent;
         color: lawngreen;
     }
+    .detail-actions a {
+        border-radius: 5px;
+        width: auto;
+        text-wrap: no-wrap;
+        padding: 8px 20px;
+        margin-right: auto;
+        text-decoration: none;
 
-        .detail-actions button:first-child {
+    }
+    .detail-actions a img{
+        margin-right: 10px;
+    }
+
+        .detail-actions button:first-child{
             border-radius: 5px;
             width: auto;
             text-wrap: no-wrap;

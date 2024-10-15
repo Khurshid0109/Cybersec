@@ -114,6 +114,8 @@ public class ArticleService : IArticleService
         var article = await _articleRepo.SelectAll()
              .Where(a => a.Id == id)
              .Include(a => a.Blocks)
+             .Include(a => a.Comments)
+             .Include(a => a.Likes)
              .FirstOrDefaultAsync();
 
         if (article is null)

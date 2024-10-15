@@ -9,14 +9,12 @@ public class Comment:Auditable
     public string Content { get; set; }
 
     // Foreign key to Article
+    [ForeignKey("ArticleId")]
     public long ArticleId { get; set; }
-
-    [ForeignKey("Id")]
     public virtual Article Article { get; set; }
 
     // Foreign key to User
+    [ForeignKey("UserId")]
     public long UserId { get; set; }
-
-    [ForeignKey("Id")]
     public virtual User User { get; set; }
 }

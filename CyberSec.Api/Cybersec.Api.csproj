@@ -8,16 +8,12 @@
 
   <ItemGroup>
     <Compile Remove="Services\**" />
-    <Compile Remove="ViewModels\**" />
     <Compile Remove="wwwroot\Videos\**" />
     <Content Remove="Services\**" />
-    <Content Remove="ViewModels\**" />
     <Content Remove="wwwroot\Videos\**" />
     <EmbeddedResource Remove="Services\**" />
-    <EmbeddedResource Remove="ViewModels\**" />
     <EmbeddedResource Remove="wwwroot\Videos\**" />
     <None Remove="Services\**" />
-    <None Remove="ViewModels\**" />
     <None Remove="wwwroot\Videos\**" />
   </ItemGroup>
 
