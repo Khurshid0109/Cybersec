@@ -61,10 +61,7 @@
                     <img width="50px" height="50px;" style="border-radius: 50%; margin-right: 20px;" src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.webp?s=2048x2048&w=is&k=20&c=X7M3yQkbRq7zIsY16tuaHy8Wu_oo5j-Hp8Uqe7wWxDY=" alt="Alternate Text" />
                     <p class="comment-text">Matn kiritishning har ikki tomoniga matn, tugmalar yoki tugma guruhlari, maxsus tanlovlar va maxsus fayl kiritishlari qoʻshish orqali shakl boshqaruvlarini osongina kengaytiring.</p>
                </div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Write..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <button class="input-group-text" id="basic-addon2">Send</button>
-                </div>
+                @await Html.PartialAsync("_CommentPartial")
             </div>
         </div>
     </div>
