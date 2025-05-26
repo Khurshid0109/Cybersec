@@ -5,22 +5,22 @@ Welcome to the **Cybersec Blog** — a modern, responsive blog platform designed
 ## 🌐 Live Preview
 > Coming Soon...
 
-## 📸 Screenshots
+## 📸 Preview
 
 ### 🔓 Login Page
-![Login Page](./screenshots/login.png)
+![Login Page](https://github.com/Khurshid0109/Cybersec/blob/master/Cybersec.SharedResources/Shared/View/user_login.png)
 
 ### 📰 Main Blog Page
-![Main Page](./screenshots/main_blog.png)
+![Main Page](https://github.com/Khurshid0109/Cybersec/blob/master/Cybersec.SharedResources/Shared/View/main_page.png)
 
 ### 🛠️ Admin Dashboard
-![Dashboard](./screenshots/admin_dashboard.png)
+![Dashboard](https://github.com/Khurshid0109/Cybersec/blob/master/Cybersec.SharedResources/Shared/View/admin_dashboard.png)
 
 ### 📑 Articles Management
-![Articles](./screenshots/articles_page.png)
+![Articles](https://github.com/Khurshid0109/Cybersec/blob/master/Cybersec.SharedResources/Shared/View/admin_article.png)
 
 ### 👤 Profile Settings
-![Profile](./screenshots/profile_settings.png)
+![Profile](https://github.com/Khurshid0109/Cybersec/blob/master/Cybersec.SharedResources/Shared/View/admin_settings.png)
 
 ---
 
