@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Shared\Images\" />
+    <Folder Include="Shared\View\" />
     <Folder Include="Shared\Videos\" />
   </ItemGroup>
 
