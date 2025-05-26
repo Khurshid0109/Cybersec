@@ -61,5 +61,4 @@ Welcome to the **Cybersec Blog** — a modern, responsive blog platform designed
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/cybersec-blog.git
-   cd cybersec-blog
+   git clone https://github.com/Khurshid0109/Cybersec.git
